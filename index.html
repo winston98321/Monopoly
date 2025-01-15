@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>佛學大富翁計分表</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.0.0-alpha/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    /* 背景圖片 */
+    body {
+      font-family: 'Arial', sans-serif;
+      background: url('background.jpg') no-repeat center center fixed;
+      background-size: cover;
+      padding: 20px;
+    }
+
+    .card {
+      background-color: rgba(255, 255, 255, 0.8);
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      transition: all 0.3s ease;
+    }
+
+    .card-header {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 1rem;
+    }
+
+    .card-content {
+      font-size: 1rem;
+      color: #444;
+    }
+
+    .card-footer {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 1rem;
+    }
+
+    .collapsed {
+      opacity: 0.6;
+      pointer-events: none;
+    }
+
+    /* 美化按鈕 */
+    button {
+      padding: 12px 20px;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+    }
+
+    button:focus {
+      outline: none;
+    }
+
+    #submitEvent {
+      background: linear-gradient(135deg, #4CAF50, #45a049);
+      color: white;
+      border: none;
+    }
+
+    #collapseClub {
+      background: linear-gradient(135deg, #f44336, #e53935);
+      color: white;
+      border: none;
+    }
+
+    #resetClub {
+      background: linear-gradient(135deg, #2196F3, #1e88e5);
+      color: white;
+      border: none;
+    }
+
+    #alertDialog {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      display: none;
+    }
+
+    .alert-content {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      width: 300px;
+      text-align: center;
+    }
+
+    .alert-footer {
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+<body class="p-4">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div id="clubCard" class="card transition-all duration-300">
+      <div class="card-header">
+        <h3>佛學大富翁計分表</h3>
+      </div>
+      <div class="card-content space-y-4">
+        <div>
+          <label class="block mb-2 text-sm font-medium">事件名稱</label>
+          <input type="text" id="eventName" class="w-full p-2 border rounded-md" placeholder="輸入事件名稱">
+        </div>
+
+        <div>
+          <label class="block mb-2 text-sm font-medium">社員變動數</label>
+          <input type="number" id="memberChange" class="w-full p-2 border rounded-md" value="0">
+        </div>
+
+        <div>
+          <label class="block mb-2 text-sm font-medium">幹部變動數</label>
+          <input type="number" id="officerChange" class="w-full p-2 border rounded-md" value="0">
+        </div>
+
+        <div>
+          <label class="block mb-2 text-sm font-medium">本次事件劫難數</label>
+          <input type="number" id="disasters" class="w-full p-2 border rounded-md" value="0">
+        </div>
+
+        <div class="pt-4 space-y-2">
+          <button id="submitEvent" class="w-full">
+            確認送出
+          </button>
+
+          <button id="collapseClub" class="w-full">
+            倒社按鈕
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <h3>統計資訊</h3>
+      </div>
+      <div class="card-content space-y-4">
+        <div class="space-y-2">
+          <p class="text-sm font-medium">目前狀態：</p>
+          <div id="stats">
+            <p>總事件數：0</p>
+            <p>目前總社員數：10</p>
+            <p>目前總幹部數：5</p>
+            <p>當前期間劫難數：0</p>
+          </div>
+        </div>
+
+        <div class="space-y-2">
+          <p class="text-sm font-medium">事件歷史：</p>
+          <div id="eventHistory" class="max-h-96 overflow-y-auto space-y-2"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 警告彈窗 -->
+  <div id="alertDialog" class="flex justify-center items-center">
+    <div class="alert-content">
+      <h4 class="text-xl font-medium">社團已倒社</h4>
+      <p>請找關主撰寫懺悔小卡，再重新創設</p>
+      <div class="alert-footer">
+        <button id="resetClub" class="w-full">
+          重新創設
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // 初始设置
+    const INITIAL_MEMBERS = 10;
+    const INITIAL_OFFICERS = 5;
+
+    let memberChange = 0;
+    let officerChange = 0;
+    let disasters = 0;
+    let eventName = '';
+    let isCollapsed = false;
+    let events = [
+      {
+        name: '初始設定',
+        memberChange: INITIAL_MEMBERS,
+        officerChange: INITIAL_OFFICERS,
+        disasters: 0,
+        timestamp: new Date().toLocaleString(),
+        isReset: true
+      }
+    ];
+
+    const submitEventButton = document.getElementById('submitEvent');
+    const collapseClubButton = document.getElementById('collapseClub');
+    const resetClubButton = document.getElementById('resetClub');
+    const alertDialog = document.getElementById('alertDialog');
+
+    const handleSubmitEvent = () => {
+      eventName = document.getElementById('eventName').value;
+      if (!eventName) {
+        alert('請輸入事件名稱！');
+        return;
+      }
+
+      memberChange = parseInt(document.getElementById('memberChange').value) || 0;
+      officerChange = parseInt(document.getElementById('officerChange').value) || 0;
+      disasters = parseInt(document.getElementById('disasters').value) || 0;
+
+      const newEvent = {
+        name: eventName,
+        memberChange,
+        officerChange,
+        disasters,
+        timestamp: new Date().toLocaleString(),
+        isReset: false
+      };
+
+      events.push(newEvent);
+
+      // Update total values based on changes
+      const totals = calculateTotals();
+
+      if (totals.totalMembers <= 0 || totals.totalOfficers <= 0) {
+        setCollapsed(true);
+        alertDialog.style.display = 'flex'; // Auto show collapse dialog
+      }
+
+      // Clear the input fields for the next event
+      document.getElementById('eventName').value = '';
+      document.getElementById('memberChange').value = 0;
+      document.getElementById('officerChange').value = 0;
+      document.getElementById('disasters').value = 0;
+
+      // Render the updated stats and event history
+      renderStats();
+      renderEventHistory();
+    };
+
+    const handleCollapseClub = () => {
+      setCollapsed(true);
+      alertDialog.style.display = 'flex';
+    };
+
+    const setCollapsed = (collapsed) => {
+      isCollapsed = collapsed;
+      const clubCard = document.getElementById('clubCard');
+      clubCard.classList.toggle('collapsed', collapsed);
+    };
+
+    const resetClub = () => {
+      const resetEvent = {
+        name: '社團重置',
+        memberChange: INITIAL_MEMBERS,
+        officerChange: INITIAL_OFFICERS,
+        disasters: 0,
+        timestamp: new Date().toLocaleString(),
+        isReset: true
+      };
+
+      // Only reset the last event, preserving history
+      events.push(resetEvent);
+      setCollapsed(false);
+
+      renderStats();
+      renderEventHistory();
+      alertDialog.style.display = 'none';
+    };
+
+    const calculateTotals = () => {
+      let lastResetIndex = events.map(e => e.isReset).lastIndexOf(true);
+      let relevantEvents = events.slice(lastResetIndex);
+    
+      return relevantEvents.reduce((acc, event) => ({
+        totalMembers: acc.totalMembers + event.memberChange,
+        totalOfficers: acc.totalOfficers + event.officerChange,
+        totalDisasters: acc.totalDisasters + event.disasters
+      }), {
+        totalMembers: 0,
+        totalOfficers: 0,
+        totalDisasters: 0
+      });
+    };
+
+    const renderStats = () => {
+      const totals = calculateTotals();
+      const statsContainer = document.getElementById('stats');
+      statsContainer.innerHTML = `
+        <p>總事件數：${events.length}</p>
+        <p>目前總社員數：${totals.totalMembers}</p>
+        <p>目前總幹部數：${totals.totalOfficers}</p>
+        <p>當前期間劫難數：${totals.totalDisasters}</p>
+      `;
+    };
+
+    const renderEventHistory = () => {
+      const eventHistoryContainer = document.getElementById('eventHistory');
+      eventHistoryContainer.innerHTML = events.map(event => `
+        <div>
+          <p><strong>${event.name}</strong></p>
+          <p>時間：${event.timestamp}</p>
+          <p>社員變動：${event.memberChange}</p>
+          <p>幹部變動：${event.officerChange}</p>
+          <p>劫難數：${event.disasters}</p>
+        </div>
+      `).join('');
+    };
+
+    submitEventButton.addEventListener('click', handleSubmitEvent);
+    collapseClubButton.addEventListener('click', handleCollapseClub);
+    resetClubButton.addEventListener('click', resetClub);
+  </script>
+</body>
+</html>
