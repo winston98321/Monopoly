@@ -15,7 +15,7 @@
       padding: 20px;
     }
 
-    .status-card {
+      .status-card {
       position: relative;
       background: url('background.jpg') no-repeat center center;
       background-size: cover; /* 這樣可以讓背景圖像自動適應 */
@@ -32,10 +32,11 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background: rgba(0, 0, 0, 0.5); /* 這裡的 0.3 是透明度，可以調整 */
+      background: rgba(0, 0, 0, 0.5); /* 透明層 */
       border-radius: 16px;
-      z-index: -1; /* 確保背景覆蓋在文字後面 */
+      z-index: 0; /* 確保背景層在最底層 */
     }
+
 
 
 
