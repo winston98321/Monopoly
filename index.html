@@ -15,15 +15,16 @@
       padding: 20px;
     }
 
-      .status-card {
+    .status-card {
       position: relative;
       background: url('background.jpg') no-repeat center center;
-      background-size: cover; /* 背景圖片自動適應 */
+      background-size: cover;
+      background-blend-mode: overlay; /* 這樣可以讓圖片和顏色混合 */
+      background-color: rgba(255, 255, 255, 0.5); /* 可以調整透明度來刷淡圖片 */
       border-radius: 16px;
       box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
       padding: 20px;
       margin-bottom: 20px;
-      color: white; /* 假設文字是白色的 */
     }
 
     .status-card::before {
@@ -33,23 +34,10 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background: rgba(0, 0, 0, 0.5); /* 半透明背景 */
+      background: rgba(0, 0, 0, 0.5); /* 可以调整透明度 */
       border-radius: 16px;
-      z-index: 1; /* 確保遮罩層位於圖片層上方，但不會蓋住文字 */
+      z-index: -1;
     }
-
-    .status-card img {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover; /* 讓圖片覆蓋整個區域 */
-      opacity: 0.5; /* 使圖片變淡 */
-    }
-
 
 
 
