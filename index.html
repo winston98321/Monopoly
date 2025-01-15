@@ -15,45 +15,188 @@
       padding: 20px;
     }
 
-    /* Updated status card styles */
     .status-card {
       background: rgba(255, 255, 255, 0.95);
-      border-radius: 12px; /* Reduced from 16px */
+      border-radius: 16px;
       box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
-      padding: 12px; /* Reduced from 20px */
-      margin-bottom: 16px; /* Reduced from 20px */
+      padding: 20px;
+      margin-bottom: 20px;
     }
 
     .status-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Reduced from 200px */
-      gap: 0.75rem; /* Reduced from 1rem */
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
     }
 
     .status-item {
-      padding: 0.75rem; /* Reduced from 1rem */
+      padding: 1rem;
       text-align: center;
       background: rgba(66, 153, 225, 0.1);
-      border-radius: 6px; /* Reduced from 8px */
+      border-radius: 8px;
       border: 1px solid rgba(66, 153, 225, 0.2);
     }
 
     .status-label {
-      font-size: 0.85rem; /* Reduced from 0.9rem */
+      font-size: 0.9rem;
       color: #4a5568;
-      margin-bottom: 0.25rem; /* Reduced from 0.5rem */
+      margin-bottom: 0.5rem;
     }
 
     .status-value {
-      font-size: 1.25rem; /* Reduced from 1.5rem */
+      font-size: 1.5rem;
       font-weight: bold;
       color: #2d3748;
     }
 
+    .card {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 16px;
+      box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
+      padding: 24px;
+      transition: all 0.4s ease;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      /* Adjusted max-width and padding */
+      max-width: 100%;
+      box-sizing: border-box;
+    }
 
+    .card-content {
+      flex: 1;
+      /* Added padding to prevent content from touching edges */
+      padding-right: 4px;
+    }
+
+    .input-group {
+      margin-bottom: 1.5rem;
+      /* Added max-width to ensure inputs don't overflow */
+      max-width: 100%;
+    }
+
+    /* Updated input styles */
+    input, select {
+      width: 100%;
+      padding: 0.75rem;
+      border: 2px solid #e2e8f0;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      font-size: 1rem;
+      background: rgba(255, 255, 255, 0.9);
+      /* Added box-sizing to include padding in width calculation */
+      box-sizing: border-box;
+      /* Added max-width to prevent overflow */
+      max-width: 100%;
+    }
+
+    /* Rest of the styles remain the same */
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 36px rgba(31, 38, 135, 0.2);
+    }
+
+    .card-header {
+      border-bottom: 2px solid #f0f0f0;
+      padding-bottom: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .card-header h3 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #2d3748;
+      margin: 0;
+    }
+
+    input:focus, select:focus {
+      border-color: #4299e1;
+      box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.2);
+      outline: none;
+    }
+
+    .button-container {
+      margin-top: auto;
+      padding-top: 2rem;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px 24px;
+      border-radius: 10px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      margin-bottom: 1rem;
+      border: none;
+      cursor: pointer;
+    }
+
+    #submitEvent {
+      background: linear-gradient(135deg, #4CAF50, #45a049);
+      color: white;
+    }
+
+    #collapseClub {
+      background: linear-gradient(135deg, #f44336, #e53935);
+      color: white;
+    }
+
+    #resetClub {
+      background: linear-gradient(135deg, #3498db, #2980b9);
+      color: white;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .collapsed {
+      opacity: 0.7;
+      pointer-events: none;
+      filter: grayscale(0.5);
+    }
+
+    #alertDialog {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.7);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      backdrop-filter: blur(5px);
+    }
+
+    .alert-content {
+      background: white;
+      padding: 2rem;
+      border-radius: 16px;
+      width: 90%;
+      max-width: 400px;
+      text-align: center;
+      box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
+    }
+
+    #eventHistory > div {
+      background: rgba(255, 255, 255, 0.9);
+      padding: 1rem;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      border-left: 4px solid #4299e1;
+    }
+
+    label {
+      color: #4a5568;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+      display: block;
+    }
   </style>
 </head>
-<!-- Rest of the HTML remains the same -->
 
 <!-- Rest of the HTML remains the same -->
 <body class="p-4">
