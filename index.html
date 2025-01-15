@@ -6,79 +6,105 @@
   <title>佛學大富翁計分表</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.0.0-alpha/dist/tailwind.min.css" rel="stylesheet">
   <style>
-    /* 背景圖片 */
     body {
-      font-family: 'Arial', sans-serif;
-      background: url('background.jpg') no-repeat center center fixed;
-      background-size: cover;
+      font-family: 'Noto Sans TC', sans-serif;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
       padding: 20px;
     }
 
     .card {
-      background-color: rgba(255, 255, 255, 0.8);
-      border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      padding: 20px;
-      transition: all 0.3s ease;
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 16px;
+      box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
+      padding: 24px;
+      transition: all 0.4s ease;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 36px rgba(31, 38, 135, 0.2);
     }
 
     .card-header {
-      font-size: 1.25rem;
-      font-weight: 600;
-      color: #333;
-      margin-bottom: 1rem;
+      border-bottom: 2px solid #f0f0f0;
+      padding-bottom: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .card-header h3 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #2d3748;
+      margin: 0;
     }
 
     .card-content {
-      font-size: 1rem;
-      color: #444;
+      flex: 1;
     }
 
-    .card-footer {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 1rem;
+    .input-group {
+      margin-bottom: 1.5rem;
     }
 
-    .collapsed {
-      opacity: 0.6;
-      pointer-events: none;
-    }
-
-    /* 美化按鈕，縮小按鈕 */
-    button {
-      padding: 8px 16px; /* 调整按钮的内边距，使其变小 */
-      font-size: 0.875rem; /* 小号字体 */
-      font-weight: 600;
+    input, select {
+      width: 100%;
+      padding: 0.75rem;
+      border: 2px solid #e2e8f0;
       border-radius: 8px;
-      cursor: pointer;
       transition: all 0.3s ease;
+      font-size: 1rem;
     }
 
-    button:hover {
-      transform: scale(1.05);
-    }
-
-    button:focus {
+    input:focus, select:focus {
+      border-color: #4299e1;
+      box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.2);
       outline: none;
+    }
+
+    .button-container {
+      margin-top: auto;
+      padding-top: 2rem;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px 24px;
+      border-radius: 10px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      margin-bottom: 1rem;
+      border: none;
+      cursor: pointer;
     }
 
     #submitEvent {
       background: linear-gradient(135deg, #4CAF50, #45a049);
       color: white;
-      border: none;
     }
 
     #collapseClub {
       background: linear-gradient(135deg, #f44336, #e53935);
       color: white;
-      border: none;
     }
 
     #resetClub {
-      background: linear-gradient(135deg, #2196F3, #1e88e5);
+      background: linear-gradient(135deg, #3498db, #2980b9);
       color: white;
-      border: none;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .collapsed {
+      opacity: 0.7;
+      pointer-events: none;
+      filter: grayscale(0.5);
     }
 
     #alertDialog {
@@ -87,42 +113,62 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background-color: rgba(0, 0, 0, 0.5);
-      display: flex;
+      background-color: rgba(0, 0, 0, 0.7);
+      display: none;
       justify-content: center;
       align-items: center;
       z-index: 9999;
-      display: none;
+      backdrop-filter: blur(5px);
     }
 
     .alert-content {
-      background-color: #fff;
-      padding: 20px;
-      border-radius: 10px;
-      width: 300px;
+      background: white;
+      padding: 2rem;
+      border-radius: 16px;
+      width: 90%;
+      max-width: 400px;
       text-align: center;
+      box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
     }
 
-    .alert-footer {
-      margin-top: 1rem;
+    #eventHistory > div {
+      background: #f8fafc;
+      padding: 1rem;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      border-left: 4px solid #4299e1;
+    }
+
+    #stats p {
+      padding: 0.5rem 0;
+      border-bottom: 1px solid #edf2f7;
+      font-size: 1.1rem;
+    }
+
+    label {
+      color: #4a5568;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+      display: block;
     }
   </style>
 </head>
 <body class="p-4">
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-    <div id="clubCard" class="card transition-all duration-300">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-6xl mx-auto">
+    <div id="clubCard" class="card">
       <div class="card-header">
         <h3>佛學大富翁計分表</h3>
       </div>
-      <div class="card-content space-y-4">
-        <div>
-          <label class="block mb-2 text-sm font-medium">事件名稱</label>
-          <input type="text" id="eventName" class="w-full p-2 border rounded-md" placeholder="輸入事件名稱">
+      <div class="card-content">
+        <div class="input-group">
+          <label>事件名稱</label>
+          <input type="text" id="eventName" placeholder="輸入事件名稱">
         </div>
 
-        <div>
-          <label class="block mb-2 text-sm font-medium">社員變動數</label>
-          <select id="memberChange" class="w-full p-2 border rounded-md">
+        <div class="input-group">
+          <label>社員變動數</label>
+          <select id="memberChange">
+            <!-- Same options as before -->
             <option value="-10">-10</option>
             <option value="-9">-9</option>
             <option value="-8">-8</option>
@@ -147,9 +193,10 @@
           </select>
         </div>
 
-        <div>
-          <label class="block mb-2 text-sm font-medium">幹部變動數</label>
-          <select id="officerChange" class="w-full p-2 border rounded-md">
+        <div class="input-group">
+          <label>幹部變動數</label>
+          <select id="officerChange">
+            <!-- Same options as before -->
             <option value="-10">-10</option>
             <option value="-9">-9</option>
             <option value="-8">-8</option>
@@ -174,19 +221,14 @@
           </select>
         </div>
 
-        <div>
-          <label class="block mb-2 text-sm font-medium">本次事件劫難數</label>
-          <input type="number" id="disasters" class="w-full p-2 border rounded-md" value="0">
+        <div class="input-group">
+          <label>本次事件劫難數</label>
+          <input type="number" id="disasters" value="0">
         </div>
 
-        <div class="pt-12 space-y-2">
-          <button id="submitEvent" class="w-full mt-12">
-            確認送出
-          </button>
-
-          <button id="collapseClub" class="w-full mt-12">
-            倒社按鈕
-          </button>
+        <div class="button-container">
+          <button id="submitEvent">確認送出</button>
+          <button id="collapseClub">倒社按鈕</button>
         </div>
       </div>
     </div>
@@ -195,39 +237,26 @@
       <div class="card-header">
         <h3>統計資訊</h3>
       </div>
-      <div class="card-content space-y-4">
-        <div class="space-y-2">
-          <div id="stats">
-            <p>總事件數：0</p>
-            <p>目前總社員數：10</p>
-            <p>目前總幹部數：5</p>
-            <p>當前期間劫難數：0</p>
-          </div>
-        </div>
-
-        <div class="space-y-2">
-          <p class="text-sm font-medium">事件歷史：</p>
-          <div id="eventHistory" class="max-h-96 overflow-y-auto space-y-2"></div>
+      <div class="card-content">
+        <div id="stats" class="mb-6"></div>
+        <div>
+          <h4 class="text-lg font-semibold mb-3">事件歷史：</h4>
+          <div id="eventHistory" class="max-h-[calc(100vh-400px)] overflow-y-auto pr-2"></div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- 警告彈窗 -->
-  <div id="alertDialog" class="flex justify-center items-center">
+  <div id="alertDialog">
     <div class="alert-content">
-      <h4 class="text-xl font-medium">社團已倒社</h4>
-      <p>請找關主撰寫懺悔小卡，再重新創設</p>
-      <div class="alert-footer">
-        <button id="resetClub" class="w-full">
-          重新創設
-        </button>
-      </div>
+      <h4 class="text-2xl font-bold mb-4">社團已倒社</h4>
+      <p class="text-gray-600 mb-6">請找關主撰寫懺悔小卡，再重新創設</p>
+      <button id="resetClub">重新創設</button>
     </div>
   </div>
 
   <script>
-    // 初始设置
+    // 保持原有的 JavaScript 代碼不變
     const INITIAL_MEMBERS = 10;
     const INITIAL_OFFICERS = 5;
 
@@ -274,21 +303,18 @@
 
       events.push(newEvent);
 
-      // Update total values based on changes
       const totals = calculateTotals();
 
       if (totals.totalMembers <= 0 || totals.totalOfficers <= 0) {
         setCollapsed(true);
-        alertDialog.style.display = 'flex'; // Auto show collapse dialog
+        alertDialog.style.display = 'flex';
       }
 
-      // Clear the input fields for the next event
       document.getElementById('eventName').value = '';
       document.getElementById('memberChange').value = 0;
       document.getElementById('officerChange').value = 0;
       document.getElementById('disasters').value = 0;
 
-      // Render the updated stats and event history
       renderStats();
       renderEventHistory();
     };
@@ -314,7 +340,6 @@
         isReset: true
       };
 
-      // Only reset the last event, preserving history
       events.push(resetEvent);
       setCollapsed(false);
 
@@ -353,8 +378,8 @@
       const eventHistoryContainer = document.getElementById('eventHistory');
       eventHistoryContainer.innerHTML = events.map(event => `
         <div>
-          <p><strong>${event.name}</strong></p>
-          <p>時間：${event.timestamp}</p>
+          <p class="text-lg font-semibold text-gray-800">${event.name}</p>
+          <p class="text-sm text-gray-600">時間：${event.timestamp}</p>
           <p>社員變動：${event.memberChange}</p>
           <p>幹部變動：${event.officerChange}</p>
           <p>劫難數：${event.disasters}</p>
@@ -365,6 +390,10 @@
     submitEventButton.addEventListener('click', handleSubmitEvent);
     collapseClubButton.addEventListener('click', handleCollapseClub);
     resetClubButton.addEventListener('click', resetClub);
+
+    // 初始化渲染
+    renderStats();
+    renderEventHistory();
   </script>
 </body>
 </html>
