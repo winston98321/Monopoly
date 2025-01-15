@@ -16,14 +16,27 @@
     }
 
     .status-card {
+      position: relative;
       background: url('background.jpg') no-repeat center center;
       background-size: cover; /* 這樣可以讓背景圖像自動適應 */
       border-radius: 16px;
       box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
       padding: 20px;
       margin-bottom: 20px;
-      opacity: 0.5;
     }
+
+    .status-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.3); /* 這裡的 0.3 是透明度，可以調整 */
+      border-radius: 16px;
+      z-index: -1; /* 確保背景覆蓋在文字後面 */
+    }
+
 
 
 
@@ -126,12 +139,11 @@
 
     button {
       width: 100%;
-      padding: 16px 24px;  /* 增加上下 padding，這樣會增加高度 */
+      padding: 8px 24px;  /* 增加上下 padding，這樣會增加高度 */
       border-radius: 10px;
       font-weight: 600;
       font-size: 18px;  /* 增加文字大小 */
       transition: all 0.3s ease;
-      margin-top: 8px;
       margin-bottom: 1rem;
       border: none;
       cursor: pointer;
