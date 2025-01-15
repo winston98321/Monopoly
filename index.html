@@ -432,8 +432,24 @@
       document.getElementById('eventStatus').textContent = events.length;
     };
 
-    const renderEventHistory = () => {
+     const renderEventHistory = () => {
       const eventHistoryContainer = document.getElementById('eventHistory');
       eventHistoryContainer.innerHTML = events.map(event => `
         <div>
-          <p class="text
+          <p class="text-lg font-semibold text-gray-800">${event.name}</p>
+          <p class="text-sm text-gray-600">時間：${event.timestamp}</p>
+          <p>社員變動：${event.memberChange}</p>
+          <p>幹部變動：${event.officerChange}</p>
+          <p>劫難數：${event.disasters}</p>
+        </div>
+      `).join('');
+    };
+    submitEventButton.addEventListener('click', handleSubmitEvent);
+    collapseClubButton.addEventListener('click', handleCollapseClub);
+    resetClubButton.addEventListener('click', resetClub);
+    // 初始化渲染
+    renderStats();
+    renderEventHistory();
+  </script>
+</body>
+</html>
