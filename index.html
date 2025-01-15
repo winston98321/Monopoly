@@ -16,12 +16,14 @@
     }
 
     .status-card {
-      background: rgba(255, 255, 255, 0.95);
+      background: url('background.jpg') no-repeat center center fixed;
+      background-size: cover;
       border-radius: 16px;
       box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
       padding: 20px;
       margin-bottom: 20px;
     }
+
 
     .status-grid {
       display: grid;
@@ -328,7 +330,7 @@
     let isCollapsed = false;
     let events = [
       {
-        name: '初始設定',
+        name: '創立社團',
         memberChange: INITIAL_MEMBERS,
         officerChange: INITIAL_OFFICERS,
         disasters: 0,
