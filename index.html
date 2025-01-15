@@ -122,12 +122,56 @@
 
         <div>
           <label class="block mb-2 text-sm font-medium">社員變動數</label>
-          <input type="number" id="memberChange" class="w-full p-2 border rounded-md" value="0">
+          <select id="memberChange" class="w-full p-2 border rounded-md">
+            <option value="-10">-10</option>
+            <option value="-9">-9</option>
+            <option value="-8">-8</option>
+            <option value="-7">-7</option>
+            <option value="-6">-6</option>
+            <option value="-5">-5</option>
+            <option value="-4">-4</option>
+            <option value="-3">-3</option>
+            <option value="-2">-2</option>
+            <option value="-1">-1</option>
+            <option value="0" selected>0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+          </select>
         </div>
 
         <div>
           <label class="block mb-2 text-sm font-medium">幹部變動數</label>
-          <input type="number" id="officerChange" class="w-full p-2 border rounded-md" value="0">
+          <select id="officerChange" class="w-full p-2 border rounded-md">
+            <option value="-10">-10</option>
+            <option value="-9">-9</option>
+            <option value="-8">-8</option>
+            <option value="-7">-7</option>
+            <option value="-6">-6</option>
+            <option value="-5">-5</option>
+            <option value="-4">-4</option>
+            <option value="-3">-3</option>
+            <option value="-2">-2</option>
+            <option value="-1">-1</option>
+            <option value="0" selected>0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+          </select>
         </div>
 
         <div>
@@ -135,12 +179,12 @@
           <input type="number" id="disasters" class="w-full p-2 border rounded-md" value="0">
         </div>
 
-        <div class="pt-4 space-y-2">
-          <button id="submitEvent" class="w-full">
+        <div class="pt-12 space-y-2">
+          <button id="submitEvent" class="w-full mt-12">
             確認送出
           </button>
 
-          <button id="collapseClub" class="w-full">
+          <button id="collapseClub" class="w-full mt-12">
             倒社按鈕
           </button>
         </div>
@@ -153,7 +197,6 @@
       </div>
       <div class="card-content space-y-4">
         <div class="space-y-2">
-          <p class="text-sm font-medium">目前狀態：</p>
           <div id="stats">
             <p>總事件數：0</p>
             <p>目前總社員數：10</p>
