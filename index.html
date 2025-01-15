@@ -6,11 +6,47 @@
   <title>佛學大富翁計分表</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.0.0-alpha/dist/tailwind.min.css" rel="stylesheet">
   <style>
+    /* Previous styles remain the same */
     body {
       font-family: 'Noto Sans TC', sans-serif;
       min-height: 100vh;
-      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      background: url('background.jpg') no-repeat center center fixed;
+      background-size: cover;
       padding: 20px;
+    }
+
+    .status-card {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 16px;
+      box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    .status-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+
+    .status-item {
+      padding: 1rem;
+      text-align: center;
+      background: rgba(66, 153, 225, 0.1);
+      border-radius: 8px;
+      border: 1px solid rgba(66, 153, 225, 0.2);
+    }
+
+    .status-label {
+      font-size: 0.9rem;
+      color: #4a5568;
+      margin-bottom: 0.5rem;
+    }
+
+    .status-value {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #2d3748;
     }
 
     .card {
@@ -22,8 +58,39 @@
       height: 100%;
       display: flex;
       flex-direction: column;
+      /* Adjusted max-width and padding */
+      max-width: 100%;
+      box-sizing: border-box;
     }
 
+    .card-content {
+      flex: 1;
+      /* Added padding to prevent content from touching edges */
+      padding-right: 4px;
+    }
+
+    .input-group {
+      margin-bottom: 1.5rem;
+      /* Added max-width to ensure inputs don't overflow */
+      max-width: 100%;
+    }
+
+    /* Updated input styles */
+    input, select {
+      width: 100%;
+      padding: 0.75rem;
+      border: 2px solid #e2e8f0;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      font-size: 1rem;
+      background: rgba(255, 255, 255, 0.9);
+      /* Added box-sizing to include padding in width calculation */
+      box-sizing: border-box;
+      /* Added max-width to prevent overflow */
+      max-width: 100%;
+    }
+
+    /* Rest of the styles remain the same */
     .card:hover {
       transform: translateY(-5px);
       box-shadow: 0 12px 36px rgba(31, 38, 135, 0.2);
@@ -40,23 +107,6 @@
       font-weight: 700;
       color: #2d3748;
       margin: 0;
-    }
-
-    .card-content {
-      flex: 1;
-    }
-
-    .input-group {
-      margin-bottom: 1.5rem;
-    }
-
-    input, select {
-      width: 100%;
-      padding: 0.75rem;
-      border: 2px solid #e2e8f0;
-      border-radius: 8px;
-      transition: all 0.3s ease;
-      font-size: 1rem;
     }
 
     input:focus, select:focus {
@@ -132,17 +182,11 @@
     }
 
     #eventHistory > div {
-      background: #f8fafc;
+      background: rgba(255, 255, 255, 0.9);
       padding: 1rem;
       border-radius: 8px;
       margin-bottom: 1rem;
       border-left: 4px solid #4299e1;
-    }
-
-    #stats p {
-      padding: 0.5rem 0;
-      border-bottom: 1px solid #edf2f7;
-      font-size: 1.1rem;
     }
 
     label {
@@ -153,7 +197,31 @@
     }
   </style>
 </head>
+
+<!-- Rest of the HTML remains the same -->
 <body class="p-4">
+  <!-- 頂部狀態卡片 -->
+  <div class="status-card max-w-6xl mx-auto">
+    <div class="status-grid">
+      <div class="status-item">
+        <div class="status-label">目前總社員數</div>
+        <div class="status-value" id="memberStatus">10</div>
+      </div>
+      <div class="status-item">
+        <div class="status-label">目前總幹部數</div>
+        <div class="status-value" id="officerStatus">5</div>
+      </div>
+      <div class="status-item">
+        <div class="status-label">當前期間劫難數</div>
+        <div class="status-value" id="disasterStatus">0</div>
+      </div>
+      <div class="status-item">
+        <div class="status-label">總事件數</div>
+        <div class="status-value" id="eventStatus">0</div>
+      </div>
+    </div>
+  </div>
+
   <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-6xl mx-auto">
     <div id="clubCard" class="card">
       <div class="card-header">
@@ -168,7 +236,6 @@
         <div class="input-group">
           <label>社員變動數</label>
           <select id="memberChange">
-            <!-- Same options as before -->
             <option value="-10">-10</option>
             <option value="-9">-9</option>
             <option value="-8">-8</option>
@@ -196,7 +263,6 @@
         <div class="input-group">
           <label>幹部變動數</label>
           <select id="officerChange">
-            <!-- Same options as before -->
             <option value="-10">-10</option>
             <option value="-9">-9</option>
             <option value="-8">-8</option>
@@ -235,14 +301,10 @@
 
     <div class="card">
       <div class="card-header">
-        <h3>統計資訊</h3>
+        <h3>事件歷史</h3>
       </div>
       <div class="card-content">
-        <div id="stats" class="mb-6"></div>
-        <div>
-          <h4 class="text-lg font-semibold mb-3">事件歷史：</h4>
-          <div id="eventHistory" class="max-h-[calc(100vh-400px)] overflow-y-auto pr-2"></div>
-        </div>
+        <div id="eventHistory" class="max-h-[calc(100vh-400px)] overflow-y-auto pr-2"></div>
       </div>
     </div>
   </div>
@@ -256,7 +318,6 @@
   </div>
 
   <script>
-    // 保持原有的 JavaScript 代碼不變
     const INITIAL_MEMBERS = 10;
     const INITIAL_OFFICERS = 5;
 
@@ -365,35 +426,14 @@
 
     const renderStats = () => {
       const totals = calculateTotals();
-      const statsContainer = document.getElementById('stats');
-      statsContainer.innerHTML = `
-        <p>總事件數：${events.length}</p>
-        <p>目前總社員數：${totals.totalMembers}</p>
-        <p>目前總幹部數：${totals.totalOfficers}</p>
-        <p>當前期間劫難數：${totals.totalDisasters}</p>
-      `;
+      document.getElementById('memberStatus').textContent = totals.totalMembers;
+      document.getElementById('officerStatus').textContent = totals.totalOfficers;
+      document.getElementById('disasterStatus').textContent = totals.totalDisasters;
+      document.getElementById('eventStatus').textContent = events.length;
     };
 
     const renderEventHistory = () => {
       const eventHistoryContainer = document.getElementById('eventHistory');
       eventHistoryContainer.innerHTML = events.map(event => `
         <div>
-          <p class="text-lg font-semibold text-gray-800">${event.name}</p>
-          <p class="text-sm text-gray-600">時間：${event.timestamp}</p>
-          <p>社員變動：${event.memberChange}</p>
-          <p>幹部變動：${event.officerChange}</p>
-          <p>劫難數：${event.disasters}</p>
-        </div>
-      `).join('');
-    };
-
-    submitEventButton.addEventListener('click', handleSubmitEvent);
-    collapseClubButton.addEventListener('click', handleCollapseClub);
-    resetClubButton.addEventListener('click', resetClub);
-
-    // 初始化渲染
-    renderStats();
-    renderEventHistory();
-  </script>
-</body>
-</html>
+          <p class="text
