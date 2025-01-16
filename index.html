@@ -539,48 +539,14 @@
         totalDisasters: 0
       });
     };
-    function animateNumber(element, start, end, duration) {
-      const range = end - start;
-      const increment = end > start ? 1 : -1;
-      const stepTime = Math.abs(Math.floor(duration / range));
-      let current = start;
-      
-      const timer = setInterval(() => {
-        current += increment;
-        element.textContent = current;
-        element.classList.add('animated-number');
-        
-        if (current === end) {
-          clearInterval(timer);
-          setTimeout(() => {
-            element.classList.remove('animated-number');
-          }, 500);
-        }
-      }, stepTime);
-    }
+   
     const renderStats = () => {
       const totals = calculateTotals();
       
-      // 動態更新數字
-      ['memberStatus', 'miniMemberStatus'].forEach(id => {
-        const element = document.getElementById(id);
-        const currentValue = parseInt(element.textContent);
-        animateNumber(element, currentValue, totals.totalMembers, 500);
-      });
-      
-      ['officerStatus', 'miniOfficerStatus'].forEach(id => {
-        const element = document.getElementById(id);
-        const currentValue = parseInt(element.textContent);
-        animateNumber(element, currentValue, totals.totalOfficers, 500);
-      });
-      
-      const disasterElement = document.getElementById('disasterStatus');
-      const currentDisasters = parseInt(disasterElement.textContent);
-      animateNumber(disasterElement, currentDisasters, totals.totalDisasters, 500);
-      
-      const eventElement = document.getElementById('eventStatus');
-      const currentEvents = parseInt(eventElement.textContent);
-      animateNumber(eventElement, currentEvents, events.length, 500);
+      document.getElementById('memberStatus').textContent = totals.totalMembers;
+      document.getElementById('officerStatus').textContent = totals.totalOfficers;
+      document.getElementById('disasterStatus').textContent = totals.totalDisasters;
+      document.getElementById('eventStatus').textContent = events.length;
     };
 
      const renderEventHistory = () => {
