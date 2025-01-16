@@ -17,6 +17,11 @@
       }
     }
 
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
     body {
       font-family: 'Noto Sans TC', sans-serif;
       min-height: 100vh;
@@ -34,42 +39,98 @@
       padding: 12px;
       z-index: 1000;
       cursor: pointer;
+      transition: all 0.3s ease;
       border-bottom: 1px solid rgba(0, 0, 0, 0.1);
       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      backdrop-filter: blur(10px);
+    }
+
+    .status-button:hover {
+      background: rgba(255, 255, 255, 1);
+      transform: translateY(2px);
     }
 
     .status-card {
       position: fixed;
-      top: -250px;
+      top: -200px;
       left: 0;
       right: 0;
-      background: rgba(255, 255, 255, 0.9);
+      background: url('background.jpg') no-repeat center center;
+      background-size: cover;
       padding: 20px;
       z-index: 999;
       transition: all 0.3s ease;
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
     }
 
+    .status-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(10px);
+      z-index: -1;
+    }
+
     .status-card.expanded {
       top: 60px;
+    }
+
+    .mini-stats {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+    }
+
+    .mini-stat-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 600;
+      font-size: 1.1rem;
+      color: #2d3748;
+      padding: 4px 12px;
+      background: rgba(66, 153, 225, 0.1);
+      border-radius: 20px;
+      transition: all 0.3s ease;
+    }
+
+    .mini-stat-item:hover {
+      background: rgba(66, 153, 225, 0.2);
+      transform: translateY(-2px);
+    }
+
+    .animated-number {
+      animation: countUp 0.5s ease-out forwards;
     }
 
     .status-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 1rem;
-      text-align: center;
+      position: relative;
+      z-index: 1;
     }
 
     .status-item {
       padding: 1rem;
+      text-align: center;
       background: rgba(66, 153, 225, 0.1);
       border-radius: 8px;
       border: 1px solid rgba(66, 153, 225, 0.2);
     }
 
+    .status-label {
+      font-size: 0.9rem;
+      color: #4a5568;
+      margin-bottom: 0.5rem;
+    }
+
     .status-value {
-      font-size: 2rem;
+      font-size: 1.5rem;
       font-weight: bold;
       color: #2d3748;
     }
@@ -79,8 +140,65 @@
       border-radius: 16px;
       box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
       padding: 24px;
+      transition: all 0.4s ease;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
       max-width: 100%;
-      transform: scale(1.1); /* 放大卡片 */
+      box-sizing: border-box;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 36px rgba(31, 38, 135, 0.2);
+    }
+
+    .card-header {
+      border-bottom: 2px solid #f0f0f0;
+      padding-bottom: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .card-header h3 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #2d3748;
+      margin: 0;
+    }
+
+    .card-content {
+      flex: 1;
+      padding-right: 4px;
+    }
+
+    .input-group {
+      margin-bottom: 1.5rem;
+      max-width: 100%;
+    }
+
+    label {
+      color: #4a5568;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 0.75rem;
+      border: 2px solid #e2e8f0;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      font-size: 1rem;
+      background: rgba(255, 255, 255, 0.9);
+      box-sizing: border-box;
+      max-width: 100%;
+    }
+
+    input:focus, select:focus {
+      border-color: #4299e1;
+      box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.2);
+      outline: none;
     }
 
     button {
@@ -89,23 +207,57 @@
       border-radius: 12px;
       font-weight: 600;
       font-size: 18px;
+      transition: all 0.3s ease;
+      margin-bottom: 1rem;
       border: none;
       cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(45deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0) 100%);
+      transform: translateX(-100%);
+      transition: transform 0.6s;
+    }
+
+    button:hover::before {
+      transform: translateX(100%);
     }
 
     #submitEvent {
-      background: #4CAF50;
+      background: linear-gradient(135deg, #4CAF50, #45a049);
       color: white;
+      box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
     }
 
     #collapseClub {
-      background: #f44336;
+      background: linear-gradient(135deg, #f44336, #e53935);
       color: white;
+      box-shadow: 0 4px 15px rgba(244, 67, 54, 0.3);
     }
 
     #resetClub {
-      background: #3498db;
+      background: linear-gradient(135deg, #3498db, #2980b9);
       color: white;
+      box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+    }
+
+    .button-container {
+      margin-top: auto;
+      padding-top: 1rem;
+    }
+
+    .collapsed {
+      opacity: 0.7;
+      pointer-events: none;
+      filter: grayscale(0.5);
     }
 
     #alertDialog {
@@ -119,6 +271,7 @@
       justify-content: center;
       align-items: center;
       z-index: 9999;
+      backdrop-filter: blur(5px);
     }
 
     .alert-content {
@@ -128,107 +281,294 @@
       width: 90%;
       max-width: 400px;
       text-align: center;
+      box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
+    }
+
+    #eventHistory > div {
+      background: rgba(255, 255, 255, 0.9);
+      padding: 1rem;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      border-left: 4px solid #4299e1;
     }
   </style>
 </head>
-<body>
-  <!-- 狀態按鈕 -->
+<body class="p-4">
+  <!-- 固定的狀態按鈕 -->
   <div class="status-button" id="statusButton">
-    <div>
-      <span>社員數:</span> <span id="memberStatusMini">10</span>
-      <span>幹部數:</span> <span id="officerStatusMini">5</span>
+    <div class="mini-stats">
+      <div class="mini-stat-item">
+        <span>社員:</span>
+        <span id="miniMemberStatus">10</span>
+      </div>
+      <div class="mini-stat-item">
+        <span>幹部:</span>
+        <span id="miniOfficerStatus">5</span>
+      </div>
     </div>
   </div>
 
-  <!-- 狀態卡片 -->
+  <!-- 展開的狀態卡片 -->
   <div class="status-card" id="statusCard">
     <div class="status-grid">
       <div class="status-item">
-        <div>社員數</div>
+        <div class="status-label">目前總社員數</div>
         <div class="status-value" id="memberStatus">10</div>
       </div>
       <div class="status-item">
-        <div>幹部數</div>
+        <div class="status-label">目前總幹部數</div>
         <div class="status-value" id="officerStatus">5</div>
       </div>
       <div class="status-item">
-        <div>劫難數</div>
+        <div class="status-label">當前期間劫難數</div>
         <div class="status-value" id="disasterStatus">0</div>
+      </div>
+      <div class="status-item">
+        <div class="status-label">總事件數</div>
+        <div class="status-value" id="eventStatus">0</div>
       </div>
     </div>
   </div>
 
-  <!-- 主內容 -->
-  <div class="card max-w-lg mx-auto mt-16">
-    <h3 class="text-2xl font-bold mb-4">佛學大富翁計分表</h3>
-    <label>事件名稱</label>
-    <input type="text" id="eventName" class="mb-4" placeholder="輸入事件名稱">
-    <label>社員變動數</label>
-    <select id="memberChange" class="mb-4">
-      <option value="-1">-1</option>
-      <option value="0" selected>0</option>
-      <option value="1">1</option>
-    </select>
-    <label>幹部變動數</label>
-    <select id="officerChange" class="mb-4">
-      <option value="-1">-1</option>
-      <option value="0" selected>0</option>
-      <option value="1">1</option>
-    </select>
-    <button id="submitEvent">送出事件</button>
-    <button id="collapseClub">倒社</button>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-6xl mx-auto mt-16">
+    <div id="clubCard" class="card">
+      <div class="card-header">
+        <h2>佛學大富翁計分表</h2>
+      </div>
+      <div class="card-content">
+        <div class="input-group">
+          <label>事件名稱</label>
+          <input type="text" id="eventName" placeholder="輸入事件名稱">
+        </div>
+
+        <div class="input-group">
+          <label>社員變動數</label>
+          <select id="memberChange">
+            <option value="-10">-10</option>
+            <option value="-9">-9</option>
+            <option value="-8">-8</option>
+            <option value="-7">-7</option>
+            <option value="-6">-6</option>
+            <option value="-5">-5</option>
+            <option value="-4">-4</option>
+            <option value="-3">-3</option>
+            <option value="-2">-2</option>
+            <option value="-1">-1</option>
+            <option value="0" selected>0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+          </select>
+        </div>
+
+        <div class="input-group">
+          <label>幹部變動數</label>
+          <select id="officerChange">
+            <option value="-10">-10</option>
+            <option value="-9">-9</option>
+            <option value="-8">-8</option>
+            <option value="-7">-7</option>
+            <option value="-6">-6</option>
+            <option value="-5">-5</option>
+            <option value="-4">-4</option>
+            <option value="-3">-3</option>
+            <option value="-2">-2</option>
+            <option value="-1">-1</option>
+            <option value="0" selected>0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+          </select>
+        </div>
+
+        <div class="input-group">
+          <label>本次事件劫難數</label>
+          <input type="number" id="disasters" value="0">
+        </div>
+
+        <div class="button-container">
+          <button id="submitEvent">確認送出</button>
+          <button id="collapseClub">倒社按鈕</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <h3>事件歷史</h3>
+      </div>
+      <div class="card-content">
+        <div id="eventHistory" class="max-h-[calc(100vh-400px)] overflow-y-auto pr-2"></div>
+      </div>
+    </div>
   </div>
 
   <div id="alertDialog">
     <div class="alert-content">
-      <h4>社團已倒社</h4>
-      <p>請重新創設</p>
+      <h4 class="text-2xl font-bold mb-4">社團已倒社</h4>
+      <p class="text-gray-600 mb-6">請找關主撰寫懺悔小卡，再重新創設</p>
       <button id="resetClub">重新創設</button>
     </div>
   </div>
 
   <script>
-    const memberStatus = document.getElementById('memberStatus');
-    const officerStatus = document.getElementById('officerStatus');
-    const memberStatusMini = document.getElementById('memberStatusMini');
-    const officerStatusMini = document.getElementById('officerStatusMini');
+    const INITIAL_MEMBERS = 10;
+    const INITIAL_OFFICERS = 5;
+
+    let memberChange = 0;
+    let officerChange = 0;
+    let disasters = 0;
+    let eventName = '';
+    let isCollapsed = false;
+    let events = [
+      {
+        name: '創立社團',
+        memberChange: INITIAL_MEMBERS,
+        officerChange: INITIAL_OFFICERS,
+        disasters: 0,
+        timestamp: new Date().toLocaleString(),
+        isReset: true
+      }
+    ];
+
+    const submitEventButton = document.getElementById('submitEvent');
+    const collapseClubButton = document.getElementById('collapseClub');
+    const resetClubButton = document.getElementById('resetClub');
+    const alertDialog = document.getElementById('alertDialog');
     const statusButton = document.getElementById('statusButton');
     const statusCard = document.getElementById('statusCard');
-
-    let memberCount = 10;
-    let officerCount = 5;
     let isExpanded = false;
-
-    function updateStatus() {
-      memberStatus.textContent = memberCount;
-      officerStatus.textContent = officerCount;
-      memberStatusMini.textContent = memberCount;
-      officerStatusMini.textContent = officerCount;
-    }
 
     statusButton.addEventListener('click', () => {
       isExpanded = !isExpanded;
       statusCard.classList.toggle('expanded', isExpanded);
-      updateStatus();
     });
 
-    document.getElementById('submitEvent').addEventListener('click', () => {
-      const memberChange = parseInt(document.getElementById('memberChange').value);
-      const officerChange = parseInt(document.getElementById('officerChange').value);
-      memberCount += memberChange;
-      officerCount += officerChange;
-      updateStatus();
-    });
+    const handleSubmitEvent = () => {
+      eventName = document.getElementById('eventName').value;
+      if (!eventName) {
+        alert('請輸入事件名稱！');
+        return;
+      }
 
-    document.getElementById('collapseClub').addEventListener('click', () => {
-      alert('社團倒社');
-    });
+      memberChange = parseInt(document.getElementById('memberChange').value) || 0;
+      officerChange = parseInt(document.getElementById('officerChange').value) || 0;
+      disasters = parseInt(document.getElementById('disasters').value) || 0;
 
-    document.getElementById('resetClub').addEventListener('click', () => {
-      memberCount = 10;
-      officerCount = 5;
-      updateStatus();
-    });
+      const newEvent = {
+        name: eventName,
+        memberChange,
+        officerChange,
+        disasters,
+        timestamp: new Date().toLocaleString(),
+        isReset: false
+      };
+
+      events.push(newEvent);
+
+      const totals = calculateTotals();
+
+      if (totals.totalMembers <= 0 || totals.totalOfficers <= 0) {
+        setCollapsed(true);
+        alertDialog.style.display = 'flex';
+      }
+
+      document.getElementById('eventName').value = '';
+      document.getElementById('memberChange').value = 0;
+      document.getElementById('officerChange').value = 0;
+      document.getElementById('disasters').value = 0;
+
+      renderStats();
+      renderEventHistory();
+    };
+
+    const handleCollapseClub = () => {
+      setCollapsed(true);
+      alertDialog.style.display = 'flex';
+    };
+
+    const setCollapsed = (collapsed) => {
+      isCollapsed = collapsed;
+      const clubCard = document.getElementById('clubCard');
+      clubCard.classList.toggle('collapsed', collapsed);
+    };
+
+    const resetClub = () => {
+      const resetEvent = {
+        name: '社團重置',
+        memberChange: INITIAL_MEMBERS,
+        officerChange: INITIAL_OFFICERS,
+        disasters: 0,
+        timestamp: new Date().toLocaleString(),
+        isReset: true
+      };
+
+      events.push(resetEvent);
+      setCollapsed(false);
+
+      renderStats();
+      renderEventHistory();
+      alertDialog.style.display = 'none';
+    };
+
+    const calculateTotals = () => {
+      let lastResetIndex = events.map(e => e.isReset).lastIndexOf(true);
+      let relevantEvents = events.slice(lastResetIndex);
+    
+      return relevantEvents.reduce((acc, event) => ({
+        totalMembers: acc.totalMembers + event.memberChange,
+        totalOfficers: acc.totalOfficers + event.officerChange,
+        totalDisasters: acc.totalDisasters + event.disasters
+      }), {
+        totalMembers: 0,
+        totalOfficers: 0,
+        totalDisasters: 0
+      });
+    };
+   
+    const renderStats = () => {
+      const totals = calculateTotals();
+      
+      document.getElementById('memberStatus').textContent = totals.totalMembers;
+      document.getElementById('officerStatus').textContent = totals.totalOfficers;
+      document.getElementById('disasterStatus').textContent = totals.totalDisasters;
+      document.getElementById('eventStatus').textContent = events.length;
+      document.getElementById("miniMemberStatus").textContent = totals.totalMembers;
+      document.getElementById("miniOfficerStatus").textContent = officerStotals.totalOfficers;
+    };
+
+     const renderEventHistory = () => {
+      const eventHistoryContainer = document.getElementById('eventHistory');
+      eventHistoryContainer.innerHTML = events.map(event => `
+        <div>
+          <p class="text-lg font-semibold text-gray-800">${event.name}</p>
+          <p class="text-sm text-gray-600">時間：${event.timestamp}</p>
+          <p>社員變動：${event.memberChange}</p>
+          <p>幹部變動：${event.officerChange}</p>
+          <p>劫難數：${event.disasters}</p>
+        </div>
+      `).join('');
+    };
+    submitEventButton.addEventListener('click', handleSubmitEvent);
+    collapseClubButton.addEventListener('click', handleCollapseClub);
+    resetClubButton.addEventListener('click', resetClub);
+    // 初始化渲染
+    renderStats();
+    renderEventHistory();
   </script>
 </body>
 </html>
