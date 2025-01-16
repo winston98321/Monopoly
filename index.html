@@ -6,7 +6,6 @@
   <title>佛學大富翁計分表</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.0.0-alpha/dist/tailwind.min.css" rel="stylesheet">
   <style>
-    /* Previous styles remain the same */
     body {
       font-family: 'Noto Sans TC', sans-serif;
       min-height: 100vh;
@@ -15,33 +14,52 @@
       padding: 20px;
     }
 
-    .status-card {
-      position: relative;
-      background: url('background.jpg') no-repeat center center;
-      background-size: cover;
-      background-blend-mode: overlay; /* 這樣可以讓圖片和顏色混合 */
-      background-color: rgba(255, 255, 255, 0.5); /* 可以調整透明度來刷淡圖片 */
-      border-radius: 16px;
-      box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
-      padding: 20px;
-      margin-bottom: 20px;
-    }
-
-    .status-card::before {
-      content: '';
-      position: absolute;
+    .status-button {
+      position: fixed;
       top: 0;
       left: 0;
       right: 0;
-      bottom: 0;
-      background: rgba(0, 0, 0, 0.5); /* 可以调整透明度 */
-      border-radius: 16px;
-      z-index: -1;
+      background: rgba(255, 255, 255, 0.95);
+      padding: 10px;
+      z-index: 1000;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
 
+    .status-button:hover {
+      background: rgba(255, 255, 255, 1);
+    }
 
+    .status-card {
+      position: fixed;
+      top: -200px;
+      left: 0;
+      right: 0;
+      background: rgba(255, 255, 255, 0.95);
+      padding: 20px;
+      z-index: 999;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
 
+    .status-card.expanded {
+      top: 50px;
+    }
 
+    .mini-stats {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+    }
+
+    .mini-stat-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 500;
+    }
 
     .status-grid {
       display: grid;
@@ -78,24 +96,20 @@
       height: 100%;
       display: flex;
       flex-direction: column;
-      /* Adjusted max-width and padding */
       max-width: 100%;
       box-sizing: border-box;
     }
 
     .card-content {
       flex: 1;
-      /* Added padding to prevent content from touching edges */
       padding-right: 4px;
     }
 
     .input-group {
       margin-bottom: 1.5rem;
-      /* Added max-width to ensure inputs don't overflow */
       max-width: 100%;
     }
 
-    /* Updated input styles */
     input, select {
       width: 100%;
       padding: 0.75rem;
@@ -104,13 +118,10 @@
       transition: all 0.3s ease;
       font-size: 1rem;
       background: rgba(255, 255, 255, 0.9);
-      /* Added box-sizing to include padding in width calculation */
       box-sizing: border-box;
-      /* Added max-width to prevent overflow */
       max-width: 100%;
     }
 
-    /* Rest of the styles remain the same */
     .card:hover {
       transform: translateY(-5px);
       box-shadow: 0 12px 36px rgba(31, 38, 135, 0.2);
@@ -142,16 +153,15 @@
 
     button {
       width: 100%;
-      padding: 16px 24px;  /* 增加上下 padding，這樣會增加高度 */
+      padding: 16px 24px;
       border-radius: 10px;
       font-weight: 600;
-      font-size: 18px;  /* 增加文字大小 */
+      font-size: 18px;
       transition: all 0.3s ease;
       margin-bottom: 1rem;
       border: none;
       cursor: pointer;
     }
-
 
     #submitEvent {
       background: linear-gradient(135deg, #4CAF50, #45a049);
@@ -219,11 +229,23 @@
     }
   </style>
 </head>
-
-<!-- Rest of the HTML remains the same -->
 <body class="p-4">
-  <!-- 頂部狀態卡片 -->
-  <div class="status-card max-w-6xl mx-auto">
+  <!-- 固定的狀態按鈕 -->
+  <div class="status-button" id="statusButton">
+    <div class="mini-stats">
+      <div class="mini-stat-item">
+        <span>社員:</span>
+        <span id="miniMemberStatus">10</span>
+      </div>
+      <div class="mini-stat-item">
+        <span>幹部:</span>
+        <span id="miniOfficerStatus">5</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 展開的狀態卡片 -->
+  <div class="status-card" id="statusCard">
     <div class="status-grid">
       <div class="status-item">
         <div class="status-label">目前總社員數</div>
@@ -244,7 +266,7 @@
     </div>
   </div>
 
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-6xl mx-auto">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-6xl mx-auto mt-16">
     <div id="clubCard" class="card">
       <div class="card-header">
         <h3>佛學大富翁計分表</h3>
@@ -363,6 +385,14 @@
     const collapseClubButton = document.getElementById('collapseClub');
     const resetClubButton = document.getElementById('resetClub');
     const alertDialog = document.getElementById('alertDialog');
+    const statusButton = document.getElementById('statusButton');
+    const statusCard = document.getElementById('statusCard');
+    let isExpanded = false;
+
+    statusButton.addEventListener('click', () => {
+      isExpanded = !isExpanded;
+      statusCard.classList.toggle('expanded', isExpanded);
+    });
 
     const handleSubmitEvent = () => {
       eventName = document.getElementById('eventName').value;
