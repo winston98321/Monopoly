@@ -38,11 +38,10 @@
 ---
 
 ## 專案結構
-├── index.html # 
-├── style.css # 自定義樣式（已內嵌於 <style>） 
-├── script.js # 前端邏輯腳本（已內嵌於 <script>） 
+├── index.html
+├── style.css # （已內嵌於 <style>） 
+├── script.js # （已內嵌於 <script>） 
 ├── README.md # 本文件 
-└── assets/ # 資產文件夾 
 └── background.jpg # 網頁背景圖
 
 ---
@@ -53,7 +52,7 @@
 2. 將專案文件下載到本地。
 3. 打開 `index.html` 以啟動網頁應用。
 ### 網頁運行
-[網頁版本連結](https://winston98321.github.io/Monopoly/)
+  [網頁版本連結](https://winston98321.github.io/Monopoly/)
 ---
 
 ## 操作指南
