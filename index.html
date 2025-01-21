@@ -458,7 +458,18 @@
     const statusButton = document.getElementById('statusButton');
     const statusCard = document.getElementById('statusCard');
     let isExpanded = false;
+    const disastersSelect = document.getElementById("disasters");
+    const eventNameInput = document.getElementById("eventName");
 
+  // 監聽「經歷的劫難」選項變化
+    disastersSelect.addEventListener("change", function () {
+      const selectedOption = disastersSelect.options[disastersSelect.selectedIndex].text;
+      if (selectedOption !== "0") {
+        eventNameInput.value = selectedOption;
+      } else {
+        eventNameInput.value = ""; 
+      }
+    });
     statusButton.addEventListener('click', () => {
       isExpanded = !isExpanded;
       statusCard.classList.toggle('expanded', isExpanded);
