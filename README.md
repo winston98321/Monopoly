@@ -38,11 +38,12 @@
 ---
 
 ## 專案結構
-###├── index.html
-###├── style.css        # （已內嵌於 <style>） 
-###├── script.js        # （已內嵌於 <script>） 
-###├── README.md        # 本文件 
-###└── background.jpg   # 網頁背景圖
+
+├── index.html
+├── style.css        # （已內嵌於 <style>） 
+├── script.js        # （已內嵌於 <script>） 
+├── README.md        # 本文件 
+└── background.jpg   # 網頁背景圖
 
 
 ---
