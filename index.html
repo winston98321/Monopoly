@@ -52,18 +52,43 @@
 
     .status-card {
       position: fixed;
-      top: -200px;
-      left: 0;
-      right: 0;
-      background: rgba(255, 255, 255, 0.95);
-      padding: 20px;
-      z-index: 999;
-      transition: all 0.3s ease;
+      top: -100%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 90%;
+      max-width: 500px;
+      background-image: url('background.jpg');
+      background-size: cover;
+      background-position: center;
+      border-radius: 12px;
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+      transition: top 0.3s ease-in-out;
+      z-index: 1000;
+      padding: 1.5rem;
     }
 
-    .status-card.expanded {
-      top: 60px;
+    #statusCard.expanded {
+      top: 1rem;
+    }
+
+    /* 為了確保文字清晰可見，添加半透明的遮罩 */
+    #statusCard::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 12px;
+      z-index: -1;
+    }
+
+    /* 調整狀態文字的樣式，確保在背景圖上清晰可見 */
+    #statusCard .status-item {
+      position: relative;
+      z-index: 1;
+      margin: 0.5rem 0;
     }
 
     .mini-stats {
@@ -1160,6 +1185,98 @@
       object-fit: cover;
       object-position: center 30%;
     }
+
+    .input-confirmation {
+      transition: all 0.3s ease;
+      outline: none;
+    }
+
+    .input-confirmation:focus {
+      box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.2);
+    }
+
+    /* 倒社按鈕樣式強化 */
+    #collapseClub {
+      background: linear-gradient(135deg, #F56565, #C53030);
+      color: white;
+      font-weight: 600;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #collapseClub:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(245, 101, 101, 0.4);
+    }
+
+    #collapseClub:active {
+      transform: translateY(1px);
+    }
+
+    #collapseClub::before {
+      content: '⚠️';
+      margin-right: 8px;
+    }
+
+    .collapse-warning {
+      text-align: center;
+      padding: 1rem;
+    }
+
+    .warning-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      animation: shake 0.5s ease-in-out;
+    }
+
+    .warning-title {
+      color: #E53E3E;
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin-bottom: 1rem;
+    }
+
+    .warning-message {
+      text-align: left;
+      margin: 1rem 0;
+    }
+
+    .warning-message ul {
+      margin: 0.5rem 0;
+      padding-left: 1rem;
+    }
+
+    .warning-message li {
+      color: #2D3748;
+      margin: 0.5rem 0;
+    }
+
+    .warning-note {
+      color: #E53E3E;
+      font-weight: bold;
+      margin-top: 1rem;
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      75% { transform: translateX(5px); }
+    }
+
+    /* 確認對話框按鈕樣式 */
+    .dialog-btn.yes {
+      background: linear-gradient(135deg, #F56565, #C53030);
+      color: white;
+      font-weight: bold;
+    }
+
+    .dialog-btn.no {
+      background: linear-gradient(135deg, #A0AEC0, #718096);
+      color: white;
+    }
   </style>
 </head>
 <body class="p-4">
@@ -1500,7 +1617,7 @@
           if (amitabhaCount > 0) {
             const useAmitabha = await showAmitabhaUseDialog();
             if (useAmitabha) {
-              amitabhaCount--; // 立即扣除阿彌陀佛功德
+              amitabhaCount--;
               renderStats();
               handleAmitabhaUse(eventName);
               return;
@@ -1514,7 +1631,7 @@
           if (amitabhaCount > 0) {
             useAmitabha = await showAmitabhaUseDialog();
             if (useAmitabha) {
-              amitabhaCount--; // 立即扣除阿彌陀佛功德
+              amitabhaCount--;
               renderStats();
             }
           }
@@ -1522,7 +1639,6 @@
           const isSuccess = await showChallengeDialog(eventName);
           
           if (isSuccess) {
-            // 挑戰成功
             const newEvent = {
               name: `成功完成「${eventName}」挑戰`,
               memberChange: 0,
@@ -1536,7 +1652,6 @@
             await showCustomDialog('恭喜完成挑戰！經歷劫難+1', '確定', null, 'success.jpg');
           } else {
             if (useAmitabha) {
-              // 使用阿彌陀佛功德
               const newEvent = {
                 name: `阿彌陀佛功德護佑，平安度過「${eventName}」挑戰失敗`,
                 memberChange: 0,
@@ -1549,7 +1664,6 @@
               events.push(newEvent);
               await showCustomDialog('阿彌陀佛功德護佑，平安度過失敗！', '確定', null, 'budda.jpg');
             } else {
-              // 失敗且未使用阿彌陀佛功德
               const newEvent = {
                 name: `失敗於「${eventName}」挑戰`,
                 memberChange: -2,
@@ -1567,32 +1681,26 @@
           renderStats();
           renderEventHistory();
           return;
-        } else if (selectedEventType === 'neutral') {
-          // 中道實相事件直接記錄，不需要選擇變動數
-          const newEvent = {
-            name: eventName,
-            memberChange: 0,
-            officerChange: 0,
-            disasters: 0,
-            timestamp: new Date().toLocaleString()
-          };
-          events.push(newEvent);
-          renderStats();
-          renderEventHistory();
-          
-          // 重置選擇狀態
-          selectedEventType = null;
-          hideAllEventButtons();
-          return;
         }
 
-        // 其他事件類型才顯示變動選項
+        // 顯示變動選項並設置事件名稱
         document.getElementById('eventName').value = eventName;
-        document.getElementById('changeInputs').classList.remove('hidden');
         
+        // 中道實相事件特殊處理
+        if (selectedEventType === 'neutral') {
+          document.getElementById('changeInputs').classList.add('hidden');
+          document.getElementById('memberChange').value = '0';
+          document.getElementById('officerChange').value = '0';
+        } else {
+          document.getElementById('changeInputs').classList.remove('hidden');
+        }
+        
+        // 重置其他按鈕的背景色
         document.querySelectorAll('.event-option').forEach(b => {
           b.style.backgroundColor = '';
         });
+        
+        // 設置選中按鈕的背景色（除了特殊事件按鈕）
         if (!btn.classList.contains('special-event')) {
           btn.style.backgroundColor = 'rgba(66, 153, 225, 0.3)';
         }
@@ -1610,8 +1718,14 @@
             return;
           }
 
-          const memberChange = parseInt(document.getElementById('memberChange').value) || 0;
-          const officerChange = parseInt(document.getElementById('officerChange').value) || 0;
+          let memberChange = 0;
+          let officerChange = 0;
+
+          // 如果不是中道實相事件，則獲取變動值
+          if (selectedEventType !== 'neutral') {
+            memberChange = parseInt(document.getElementById('memberChange').value) || 0;
+            officerChange = parseInt(document.getElementById('officerChange').value) || 0;
+          }
 
           // 創建新事件
           const newEvent = {
@@ -1642,6 +1756,7 @@
           // 重置按鈕樣式
           document.querySelectorAll('.event-type-btn, .event-option').forEach(btn => {
             btn.style.backgroundColor = '';
+            btn.classList.remove('active');
           });
           
           // 隱藏所有事件按鈕
@@ -1742,9 +1857,33 @@
       });
     };
 
-    const handleCollapseClub = () => {
+    const handleCollapseClub = async () => {
+      // 簡單明確的確認對話框
+      const confirmCollapse = await showCustomDialog(
+        '確定要倒社嗎？此操作會清空所有社員和幹部。',
+        '確定倒社',
+        '取消',
+        'warning.jpg'
+      );
+
+      if (!confirmCollapse) return;
+
+      // 執行倒社操作
       setCollapsed(true);
       alertDialog.style.display = 'flex';
+
+      // 記錄倒社事件
+      const totals = calculateTotals();
+      const collapseEvent = {
+        name: '社團倒社',
+        memberChange: -totals.totalMembers,
+        officerChange: -totals.totalOfficers,
+        disasters: 0,
+        timestamp: new Date().toLocaleString(),
+        isCollapse: true
+      };
+      events.push(collapseEvent);
+      renderEventHistory();
     };
 
     const setCollapsed = (collapsed) => {
@@ -2047,6 +2186,67 @@
           dialog.classList.add('hidden');
           resolve(false);
         };
+      });
+    }
+
+    // 添加輸入對話框函數
+    function showInputDialog(message, confirmText, cancelText, expectedInput) {
+      return new Promise((resolve) => {
+        const dialog = document.createElement('div');
+        dialog.className = 'custom-dialog';
+        dialog.innerHTML = `
+          <div class="dialog-backdrop"></div>
+          <div class="dialog-container">
+            <div class="dialog-content">
+              <p class="dialog-message mb-4">${message}</p>
+              <input type="text" 
+                     class="input-confirmation mb-4 w-full px-3 py-2 border rounded-lg" 
+                     placeholder="請輸入確認文字">
+              <div class="dialog-buttons">
+                ${cancelText ? `<button class="dialog-btn no">${cancelText}</button>` : ''}
+                <button class="dialog-btn yes" disabled>${confirmText}</button>
+              </div>
+            </div>
+          </div>
+        `;
+
+        document.body.appendChild(dialog);
+
+        const input = dialog.querySelector('.input-confirmation');
+        const confirmButton = dialog.querySelector('.dialog-btn.yes');
+        const cancelButton = dialog.querySelector('.dialog-btn.no');
+
+        // 即時驗證輸入
+        input.addEventListener('input', (e) => {
+          confirmButton.disabled = e.target.value !== expectedInput;
+          
+          // 添加視覺反饋
+          if (e.target.value.length > 0) {
+            if (e.target.value === expectedInput) {
+              input.style.borderColor = '#48BB78';  // 綠色
+              input.style.backgroundColor = '#F0FFF4';
+            } else {
+              input.style.borderColor = '#F56565';  // 紅色
+              input.style.backgroundColor = '#FFF5F5';
+            }
+          } else {
+            input.style.borderColor = '#E2E8F0';  // 預設邊框色
+            input.style.backgroundColor = '#FFFFFF';
+          }
+        });
+
+        confirmButton.addEventListener('click', () => {
+          const value = input.value;
+          document.body.removeChild(dialog);
+          resolve(value);
+        });
+
+        if (cancelButton) {
+          cancelButton.addEventListener('click', () => {
+            document.body.removeChild(dialog);
+            resolve(null);
+          });
+        }
       });
     }
   </script>
