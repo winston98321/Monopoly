@@ -55,24 +55,11 @@
       top: -200px;
       left: 0;
       right: 0;
-      background: url('background.jpg') no-repeat center center;
-      background-size: cover;
+      background: rgba(255, 255, 255, 0.95);
       padding: 20px;
       z-index: 999;
       transition: all 0.3s ease;
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-    }
-
-    .status-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: rgba(255, 255, 255, 0.9);
-      backdrop-filter: blur(10px);
-      z-index: -1;
     }
 
     .status-card.expanded {
@@ -101,6 +88,11 @@
     .mini-stat-item:hover {
       background: rgba(66, 153, 225, 0.2);
       transform: translateY(-2px);
+    }
+
+    .amitabha-mini {
+      background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 165, 0, 0.1)) !important;
+      border: 1px solid rgba(255, 215, 0, 0.3);
     }
 
     .animated-number {
@@ -237,6 +229,11 @@
       box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
     }
 
+    #submitEvent:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 20px rgba(76, 175, 80, 0.4);
+    }
+
     #collapseClub {
       background: linear-gradient(135deg, #f44336, #e53935);
       color: white;
@@ -289,12 +286,205 @@
       padding: 1rem;
       border-radius: 8px;
       margin-bottom: 1rem;
-      border-left: 4px solid #4299e1;
+      animation: fadeIn 0.5s ease-out;
+    }
+
+    .event-type-buttons {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .event-type-btn {
+      flex: 1;
+      padding: 0.75rem;
+      border-radius: 8px;
+      font-weight: 600;
+      transition: background-color 0.3s ease;
+    }
+
+    .event-type-btn:hover {
+      background-color: rgba(66, 153, 225, 0.2);
+    }
+
+    .event-options {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.5rem;
+    }
+
+    .event-option {
+      padding: 0.75rem;
+      border-radius: 8px;
+      font-weight: 500;
+      background: rgba(66, 153, 225, 0.1);
+      border: 1px solid rgba(66, 153, 225, 0.2);
+      transition: background-color 0.3s ease;
+    }
+
+    .event-option:hover {
+      background-color: rgba(66, 153, 225, 0.2);
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .amitabha-status {
+      text-align: center;
+      padding: 1rem;
+      background: rgba(255, 223, 186, 0.2);
+      border-radius: 8px;
+      margin: 1rem 0;
+    }
+
+    .special-event {
+      background: linear-gradient(135deg, #FFD700, #FFA500) !important;
+      color: #fff;
+      font-weight: bold;
+      border: none !important;
+    }
+
+    .special-event:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(255, 215, 0, 0.3);
+    }
+
+    #challenges {
+      width: 100%;
+      padding: 0.75rem;
+      border: 2px solid #e2e8f0;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      font-size: 1rem;
+      background: rgba(255, 255, 255, 0.9);
+      margin-bottom: 1rem;
+    }
+
+    #challenges:focus {
+      border-color: #4299e1;
+      box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.2);
+      outline: none;
+    }
+
+    .submit-button {
+      background: linear-gradient(135deg, #4CAF50, #45a049);
+      color: white;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .submit-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .submit-button:active {
+      transform: translateY(0);
+    }
+
+    .event-option[data-event="布施攝"],
+    .event-option[data-event="愛語攝"],
+    .event-option[data-event="利行攝"],
+    .event-option[data-event="同事攝"] {
+      background: linear-gradient(135deg, #4ffd7a, #eaff2a);
+      color: rgb(0, 0, 0);
+      border: none !important;
+      transition: all 0.3s ease;
+    }
+
+    .event-option[data-event="布施攝"]:hover,
+    .event-option[data-event="愛語攝"]:hover,
+    .event-option[data-event="利行攝"]:hover,
+    .event-option[data-event="同事攝"]:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(86, 238, 72, 0.3);
+    }
+
+    /* 善緣按鈕 - 翡翠綠漸層 */
+    .event-type-btn[data-type="good"] {
+      background: linear-gradient(135deg, #48BB78, #38A169);
+      color: white;
+      border: none !important;
+      box-shadow: 0 4px 12px rgba(72, 187, 120, 0.2);
+    }
+
+    /* 惡緣按鈕 - 深紅漸層 */
+    .event-type-btn[data-type="bad"] {
+      background: linear-gradient(135deg, #F56565, #E53E3E);
+      color: white;
+      border: none !important;
+      box-shadow: 0 4px 12px rgba(245, 101, 101, 0.2);
+    }
+
+    /* 中道實相按鈕 - 寶藍漸層 */
+    .event-type-btn[data-type="neutral"] {
+      background: linear-gradient(135deg, #4299E1, #3182CE);
+      color: white;
+      border: none !important;
+      box-shadow: 0 4px 12px rgba(66, 153, 225, 0.2);
+    }
+
+    /* 挑戰按鈕 - 紫金漸層 */
+    .event-type-btn[data-type="challenge"] {
+      background: linear-gradient(135deg, #9F7AEA, #805AD5);
+      color: white;
+      border: none !important;
+      box-shadow: 0 4px 12px rgba(159, 122, 234, 0.2);
+    }
+
+    /* 共同的懸浮效果 */
+    .event-type-btn {
+      transition: all 0.3s ease;
+      font-weight: 600;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    }
+
+    .event-type-btn:hover {
+      transform: translateY(-2px);
+      filter: brightness(110%);
+    }
+
+    .event-type-btn:active {
+      transform: translateY(0);
+      filter: brightness(95%);
+    }
+
+    /* 選中狀態 */
+    .event-type-btn.active {
+      filter: brightness(105%);
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .pass-start-button {
+      background: linear-gradient(135deg, #F6AD55, #ED8936);
+      color: white;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: none;
+      box-shadow: 0 4px 12px rgba(237, 137, 54, 0.2);
+    }
+
+    .pass-start-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba(237, 137, 54, 0.3);
+    }
+
+    .pass-start-button:active {
+      transform: translateY(0);
+      box-shadow: 0 2px 8px rgba(237, 137, 54, 0.2);
     }
   </style>
 </head>
 <body class="p-4">
-  <!-- 固定的狀態按鈕 -->
+  <!-- 修改固定的狀態按鈕 -->
   <div class="status-button" id="statusButton">
     <div class="mini-stats">
       <div class="mini-stat-item">
@@ -305,10 +495,14 @@
         <span>幹部:</span>
         <span id="miniOfficerStatus">5</span>
       </div>
+      <div class="mini-stat-item amitabha-mini">
+        <span>阿彌陀佛:</span>
+        <span id="miniAmitabhaStatus">0</span>
+      </div>
     </div>
   </div>
 
-  <!-- 展開的狀態卡片 -->
+  <!-- 修改展開的狀態卡片 -->
   <div class="status-card" id="statusCard">
     <div class="status-grid">
       <div class="status-item">
@@ -324,8 +518,8 @@
         <div class="status-value" id="disasterStatus">0</div>
       </div>
       <div class="status-item">
-        <div class="status-label">總事件數</div>
-        <div class="status-value" id="eventStatus">0</div>
+        <div class="status-label">阿彌陀佛功德</div>
+        <div class="status-value" id="amitabhaStatus">0</div>
       </div>
     </div>
   </div>
@@ -338,77 +532,129 @@
       <div class="card-content">
         <div class="input-group">
           <label>事件名稱</label>
-          <input type="text" id="eventName" placeholder="輸入事件名稱">
+          <input type="text" id="eventName" readonly>
         </div>
 
         <div class="input-group">
-          <label>社員變動數</label>
-          <select id="memberChange">
-            <option value="-10">-10</option>
-            <option value="-9">-9</option>
-            <option value="-8">-8</option>
-            <option value="-7">-7</option>
-            <option value="-6">-6</option>
-            <option value="-5">-5</option>
-            <option value="-4">-4</option>
-            <option value="-3">-3</option>
-            <option value="-2">-2</option>
-            <option value="-1">-1</option>
-            <option value="0" selected>0</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-            <option value="6">6</option>
-            <option value="7">7</option>
-            <option value="8">8</option>
-            <option value="9">9</option>
-            <option value="10">10</option>
-          </select>
+          <label>選擇事件類型</label>
+          <div class="event-type-buttons">
+            <button class="event-type-btn" data-type="good">善緣</button>
+            <button class="event-type-btn" data-type="bad">惡緣</button>
+            <button class="event-type-btn" data-type="neutral">中道實相</button>
+            <button class="event-type-btn" data-type="challenge">挑戰</button>
+          </div>
         </div>
 
-        <div class="input-group">
-          <label>幹部變動數</label>
-          <select id="officerChange">
-            <option value="-10">-10</option>
-            <option value="-9">-9</option>
-            <option value="-8">-8</option>
-            <option value="-7">-7</option>
-            <option value="-6">-6</option>
-            <option value="-5">-5</option>
-            <option value="-4">-4</option>
-            <option value="-3">-3</option>
-            <option value="-2">-2</option>
-            <option value="-1">-1</option>
-            <option value="0" selected>0</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-            <option value="6">6</option>
-            <option value="7">7</option>
-            <option value="8">8</option>
-            <option value="9">9</option>
-            <option value="10">10</option>
-          </select>
+        <div class="input-group event-buttons hidden" id="goodEvents">
+          <label>善緣事件</label>
+          <div class="event-options">
+            <button class="event-option" data-event="廣結善緣">廣結善緣</button>
+            <button class="event-option" data-event="福報現前">福報現前</button>
+            <button class="event-option" data-event="發長遠心">發長遠心</button>
+            <button class="event-option" data-event="見性成佛">見性成佛</button>
+            <button class="event-option" data-event="時來運轉">時來運轉</button>
+            <button class="event-option special-event" data-event="阿彌陀佛">阿彌陀佛</button>
+            <button class="event-option" data-event="布施攝">布施攝</button>
+            <button class="event-option" data-event="愛語攝">愛語攝</button>
+            <button class="event-option" data-event="利行攝">利行攝</button>
+            <button class="event-option" data-event="同事攝">同事攝</button/>
+          </div>
         </div>
 
-        <div class="input-group">
-          <label for="disasters">經歷的劫難</label>
-          <select id="disasters">
-            <option value="0" selected>0</option>
-            <option value="1">阿修羅的挑戰</option>
-            <option value="1">夜叉的阻攔</option>
-            <option value="1">阿羅漢的煩惱</option>
-          </select>
+        <div class="input-group event-buttons hidden" id="badEvents">
+          <label>惡緣事件</label>
+          <div class="event-options">
+            <button class="event-option" data-event="境界來襲">境界來襲</button>
+            <button class="event-option" data-event="惡緣纏身">惡緣纏身</button>
+            <button class="event-option" data-event="迷失本心">迷失本心</button>
+            <button class="event-option" data-event="流浪諸有">流浪諸有</button>
+            <button class="event-option" data-event="怒目金剛">怒目金剛</button>
+            <button class="event-option" data-event="惡業果熟">惡業果熟</button>
+            <button class="event-option" data-event="悲心不足">悲心不足</button>
+          </div>
         </div>
 
+        <div class="input-group event-buttons hidden" id="neutralEvents">
+          <label>中道實相事件</label>
+          <div class="event-options">
+            <button class="event-option" data-event="中道實相">中道實相</button>
+            <button class="event-option" data-event="和而不同">和而不同</button>
+            <button class="event-option" data-event="不偏不倚">不偏不倚</button>
+            <button class="event-option" data-event="中庸之道">中庸之道</button>
+            <button class="event-option" data-event="動容揚古路">動容揚古路</button>
+            <button class="event-option" data-event="不墮悄然機">不墮悄然機</button>
+          </div>
+        </div>
+
+        <div class="input-group event-buttons hidden" id="challengeEvents">
+          <label>挑戰事件</label>
+          <div class="event-options">
+            <button class="event-option" data-event="阿修羅的挑戰">阿修羅的挑戰</button>
+            <button class="event-option" data-event="夜叉的阻攔">夜叉的阻攔</button>
+            <button class="event-option" data-event="阿羅漢的煩惱">阿羅漢的煩惱</button>
+          </div>
+        </div>
+
+        <div class="input-group hidden" id="changeInputs">
+          <div class="input-group">
+            <label>社員變動數</label>
+            <select id="memberChange">
+              <option value="-10">-10</option>
+              <option value="-9">-9</option>
+              <option value="-8">-8</option>
+              <option value="-7">-7</option>
+              <option value="-6">-6</option>
+              <option value="-5">-5</option>
+              <option value="-4">-4</option>
+              <option value="-3">-3</option>
+              <option value="-2">-2</option>
+              <option value="-1">-1</option>
+              <option value="0" selected>0</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+              <option value="9">9</option>
+              <option value="10">10</option>
+            </select>
+          </div>
+
+          <div class="input-group">
+            <label>幹部變動數</label>
+            <select id="officerChange">
+              <option value="-10">-10</option>
+              <option value="-9">-9</option>
+              <option value="-8">-8</option>
+              <option value="-7">-7</option>
+              <option value="-6">-6</option>
+              <option value="-5">-5</option>
+              <option value="-4">-4</option>
+              <option value="-3">-3</option>
+              <option value="-2">-2</option>
+              <option value="-1">-1</option>
+              <option value="0" selected>0</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+              <option value="9">9</option>
+              <option value="10">10</option>
+            </select>
+          </div>
+        </div>
 
         <div class="button-container">
-          <button id="submitEvent">確認送出</button>
+          <button id="submitEvent" class="submit-button">送出事件</button>
           <button id="collapseClub">倒社按鈕</button>
+          <button id="passStart" class="pass-start-button">經過起點</button>
         </div>
       </div>
     </div>
@@ -451,7 +697,6 @@
       }
     ];
 
-    const submitEventButton = document.getElementById('submitEvent');
     const collapseClubButton = document.getElementById('collapseClub');
     const resetClubButton = document.getElementById('resetClub');
     const alertDialog = document.getElementById('alertDialog');
@@ -461,56 +706,194 @@
     const disastersSelect = document.getElementById("disasters");
     const eventNameInput = document.getElementById("eventName");
 
-  // 監聽「經歷的劫難」選項變化
-    disastersSelect.addEventListener("change", function () {
-      const selectedOption = disastersSelect.options[disastersSelect.selectedIndex].text;
-      if (selectedOption !== "0") {
-        eventNameInput.value = selectedOption;
-      } else {
-        eventNameInput.value = ""; 
+    let amitabhaCount = 0;
+    let selectedEventType = null;
+
+    // 事件類型按鈕點擊處理
+    document.querySelectorAll('.event-type-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        selectedEventType = btn.dataset.type;
+        hideAllEventButtons();
+        document.querySelectorAll('.event-type-btn').forEach(b => {
+          b.classList.remove('active');
+        });
+        btn.classList.add('active');
+        document.getElementById(`${selectedEventType}Events`).classList.remove('hidden');
+      });
+    });
+
+    // 修改事件按鈕點擊處理
+    document.querySelectorAll('.event-option').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const eventName = btn.dataset.event;
+        
+        if (selectedEventType === 'bad') {
+          if (amitabhaCount > 0) {
+            const useAmitabha = confirm('是否使用阿彌陀佛功德抵消惡緣？');
+            if (useAmitabha) {
+              handleAmitabhaUse(eventName);
+              return;
+            }
+          }
+        } else if (eventName === '阿彌陀佛') {
+          handleAmitabhaGain();
+          return;
+        } else if (selectedEventType === 'challenge') {
+          let useAmitabha = false;
+          if (amitabhaCount > 0) {
+            useAmitabha = confirm('是否使用阿彌陀佛功德加持挑戰？');
+            if (useAmitabha) {
+              handleAmitabhaUse(eventName);
+            }
+          }
+
+          const isSuccess = confirm(`是否成功完成「${eventName}」挑戰？`);
+          
+          if (isSuccess) {
+            // 挑戰成功
+            const newEvent = {
+              name: `成功完成「${eventName}」挑戰`,
+              memberChange: 0,
+              officerChange: 0,
+              disasters: 1,
+              timestamp: new Date().toLocaleString(),
+              isChallenge: true,
+              challengeResult: 'success'
+            };
+            events.push(newEvent);
+            alert('恭喜完成挑戰！經歷劫難+1');
+          } else {
+            // 挑戰失敗
+            if (useAmitabha) {
+              // 使用阿彌陀佛功德，失敗無懲罰
+              const newEvent = {
+                name: `阿彌陀佛功德護佑，平安度過「${eventName}」挑戰失敗`,
+                memberChange: 0,
+                officerChange: 0,
+                disasters: 0,
+                timestamp: new Date().toLocaleString(),
+                isChallenge: true,
+                challengeResult: 'protected'
+              };
+              events.push(newEvent);
+              alert('阿彌陀佛功德護佑，平安度過失敗！');
+            } else {
+              // 未使用阿彌陀佛功德，失敗扣社員
+              const newEvent = {
+                name: `失敗於「${eventName}」挑戰`,
+                memberChange: -2,
+                officerChange: 0,
+                disasters: 0,
+                timestamp: new Date().toLocaleString(),
+                isChallenge: true,
+                challengeResult: 'fail'
+              };
+              events.push(newEvent);
+              alert('挑戰失敗！社員-2');
+            }
+          }
+          
+          renderStats();
+          renderEventHistory();
+          return;
+        }
+
+        // 其他事件處理...
+        document.getElementById('eventName').value = eventName;
+        document.getElementById('changeInputs').classList.remove('hidden');
+        
+        document.querySelectorAll('.event-option').forEach(b => {
+          b.style.backgroundColor = '';
+        });
+        if (!btn.classList.contains('special-event')) {
+          btn.style.backgroundColor = 'rgba(66, 153, 225, 0.3)';
+        }
+      });
+    });
+
+    // 修改送出事件按鈕的處理函數
+    document.addEventListener('DOMContentLoaded', () => {
+      const submitButton = document.getElementById('submitEvent');
+      if (submitButton) {
+        submitButton.addEventListener('click', () => {
+          const eventName = document.getElementById('eventName').value;
+          if (!eventName) {
+            alert('請選擇事件！');
+            return;
+          }
+
+          const memberChange = parseInt(document.getElementById('memberChange').value) || 0;
+          const officerChange = parseInt(document.getElementById('officerChange').value) || 0;
+
+          // 創建新事件
+          const newEvent = {
+            name: eventName,
+            memberChange: memberChange,
+            officerChange: officerChange,
+            disasters: 0,
+            timestamp: new Date().toLocaleString(),
+            isReset: false
+          };
+
+          // 添加事件到歷史記錄
+          events.push(newEvent);
+
+          // 檢查是否倒社
+          const totals = calculateTotals();
+          if (totals.totalMembers <= 0 || totals.totalOfficers <= 0) {
+            setCollapsed(true);
+            document.getElementById('alertDialog').style.display = 'flex';
+          }
+
+          // 重置表單
+          document.getElementById('eventName').value = '';
+          document.getElementById('memberChange').value = '0';
+          document.getElementById('officerChange').value = '0';
+          document.getElementById('changeInputs').classList.add('hidden');
+          
+          // 重置按鈕樣式
+          document.querySelectorAll('.event-type-btn, .event-option').forEach(btn => {
+            btn.style.backgroundColor = '';
+          });
+          
+          // 隱藏所有事件按鈕
+          hideAllEventButtons();
+
+          // 更新顯示
+          renderStats();
+          renderEventHistory();
+
+          // 重置選擇狀態
+          selectedEventType = null;
+        });
       }
     });
-    statusButton.addEventListener('click', () => {
-      isExpanded = !isExpanded;
-      statusCard.classList.toggle('expanded', isExpanded);
-    });
 
-    const handleSubmitEvent = () => {
-      eventName = document.getElementById('eventName').value;
-      if (!eventName) {
-        alert('請輸入事件名稱！');
-        return;
+    // 新增阿彌陀佛功德
+    const addAmitabha = () => {
+      if (selectedEventType === 'good') {
+        amitabhaCount++;
+        document.getElementById('amitabhaCount').textContent = amitabhaCount;
       }
+    };
 
-      memberChange = parseInt(document.getElementById('memberChange').value) || 0;
-      officerChange = parseInt(document.getElementById('officerChange').value) || 0;
-      disasters = parseInt(document.getElementById('disasters').value) || 0;
+    const hideAllEventButtons = () => {
+      document.querySelectorAll('.event-buttons').forEach(div => {
+        div.classList.add('hidden');
+      });
+      document.getElementById('changeInputs').classList.add('hidden');
+      
+      // 重置所有按鈕的背景色
+      document.querySelectorAll('.event-type-btn, .event-option').forEach(btn => {
+        btn.style.backgroundColor = '';
+      });
+    };
 
-      const newEvent = {
-        name: eventName,
-        memberChange,
-        officerChange,
-        disasters,
-        timestamp: new Date().toLocaleString(),
-        isReset: false
-      };
-
-      events.push(newEvent);
-
-      const totals = calculateTotals();
-
-      if (totals.totalMembers <= 0 || totals.totalOfficers <= 0) {
-        setCollapsed(true);
-        alertDialog.style.display = 'flex';
-      }
-
-      document.getElementById('eventName').value = '';
-      document.getElementById('memberChange').value = 0;
-      document.getElementById('officerChange').value = 0;
-      document.getElementById('disasters').value = 0;
-
-      renderStats();
-      renderEventHistory();
+    const showConfirmDialog = (message) => {
+      return new Promise((resolve) => {
+        const confirmed = confirm(message);
+        resolve(confirmed);
+      });
     };
 
     const handleCollapseClub = () => {
@@ -563,29 +946,204 @@
       document.getElementById('memberStatus').textContent = totals.totalMembers;
       document.getElementById('officerStatus').textContent = totals.totalOfficers;
       document.getElementById('disasterStatus').textContent = totals.totalDisasters;
-      document.getElementById('eventStatus').textContent = events.length;
-      document.getElementById("miniMemberStatus").textContent = totals.totalMembers;
-      document.getElementById("miniOfficerStatus").textContent = totals.totalOfficers;
+      document.getElementById('miniMemberStatus').textContent = totals.totalMembers;
+      document.getElementById('miniOfficerStatus').textContent = totals.totalOfficers;
+      
+      // 更新阿彌陀佛顯示
+      updateAmitabhaDisplay();
+
+      // 添加動畫效果
+      document.querySelectorAll('.status-value, .mini-stat-item span:last-child').forEach(el => {
+        el.classList.remove('animated-number');
+        void el.offsetWidth;
+        el.classList.add('animated-number');
+      });
     };
 
      const renderEventHistory = () => {
       const eventHistoryContainer = document.getElementById('eventHistory');
-      eventHistoryContainer.innerHTML = events.map(event => `
-        <div>
-          <p class="text-lg font-semibold text-gray-800">${event.name}</p>
-          <p class="text-sm text-gray-600">時間：${event.timestamp}</p>
-          <p>社員變動：${event.memberChange}</p>
-          <p>幹部變動：${event.officerChange}</p>
-          <p>劫難數：${event.disasters}</p>
-        </div>
-      `).join('');
+      eventHistoryContainer.innerHTML = events.map(event => {
+        let eventHtml = `
+          <div class="${getEventClass(event)} p-4 rounded-lg mb-4 border-l-4 ${getEventBorderColor(event)}">
+            <p class="text-lg font-semibold text-gray-800">${event.name}</p>
+            <p class="text-sm text-gray-600">時間：${event.timestamp}</p>
+        `;
+
+        if (event.isAmitabha) {
+          eventHtml += `
+            <p class="text-amber-600 font-medium">
+              阿彌陀佛功德 ${event.amitabhaChange > 0 ? '+' : ''}${event.amitabhaChange}
+            </p>
+          `;
+        } else if (event.isChallenge) {
+          eventHtml += `
+            <p class="text-indigo-600 font-medium">
+              ${event.challengeResult === 'success' ? '經歷劫難 +1' : 
+                event.challengeResult === 'protected' ? '阿彌陀佛護佑' : 
+                '社員 -2'}
+            </p>
+          `;
+        } else {
+          eventHtml += `
+            <p>社員變動：${event.memberChange}</p>
+            <p>幹部變動：${event.officerChange}</p>
+          `;
+        }
+
+        eventHtml += `</div>`;
+        return eventHtml;
+      }).join('');
     };
-    submitEventButton.addEventListener('click', handleSubmitEvent);
+
+    // 添加事件邊框顏色輔助函數
+    const getEventBorderColor = (event) => {
+      if (event.isAmitabha) {
+        return event.amitabhaChange > 0 ? 
+          'border-amber-400' :  // 獲得阿彌陀佛功德
+          'border-amber-600';   // 使用阿彌陀佛功德
+      }
+      if (event.isChallenge) {
+        return event.challengeResult === 'success' ? 'border-indigo-500' :
+               event.challengeResult === 'protected' ? 'border-amber-500' :
+               'border-red-500';
+      }
+      if (event.memberChange > 0 || event.officerChange > 0) {
+        return 'border-green-500';  // 正向變動
+      }
+      if (event.memberChange < 0 || event.officerChange < 0) {
+        return 'border-red-500';    // 負向變動
+      }
+      if (event.isPassStart) {
+        return 'border-orange-500';  // 經過起點的邊框顏色
+      }
+      return 'border-blue-500';     // 中性變動（中道實相）
+    };
+
+    // 新增事件樣式輔助函數
+    const getEventClass = (event) => {
+      if (event.isAmitabha) {
+        return 'bg-yellow-50';
+      }
+      if (event.isChallenge) {
+        return event.challengeResult === 'success' ? 'bg-indigo-50' :
+               event.challengeResult === 'protected' ? 'bg-amber-50' :
+               'bg-red-50';
+      }
+      if (event.isPassStart) {
+        return 'bg-orange-50';  // 經過起點的背景顏色
+      }
+      return '';
+    };
+
     collapseClubButton.addEventListener('click', handleCollapseClub);
     resetClubButton.addEventListener('click', resetClub);
-    // 初始化渲染
-    renderStats();
-    renderEventHistory();
+    // 確保在 DOMContentLoaded 事件中綁定送出按鈕事件
+    document.addEventListener('DOMContentLoaded', () => {
+      // ... existing DOMContentLoaded code ...
+
+      // 修改狀態按鈕點擊事件
+      const statusButton = document.getElementById('statusButton');
+      const statusCard = document.getElementById('statusCard');
+
+      statusButton.addEventListener('click', (e) => {
+        e.stopPropagation(); // 防止事件冒泡
+        isExpanded = !isExpanded;
+        statusCard.classList.toggle('expanded', isExpanded);
+      });
+
+      // 點擊其他地方時收起狀態卡片
+      document.addEventListener('click', (event) => {
+        if (!statusButton.contains(event.target) && 
+            !statusCard.contains(event.target) && 
+            isExpanded) {
+          isExpanded = false;
+          statusCard.classList.remove('expanded');
+        }
+      });
+
+      // 防止狀態卡片的點擊事件冒泡
+      statusCard.addEventListener('click', (e) => {
+        e.stopPropagation();
+      });
+    });
+
+    // 添加阿彌陀佛功德獲得處理函數
+    function handleAmitabhaGain() {
+      alert('南無阿彌陀佛！獲得一次阿彌陀佛功德！');
+      amitabhaCount++;
+      updateAmitabhaDisplay();
+      
+      // 記錄獲得阿彌陀佛功德的事件
+      const newEvent = {
+        name: '遇見阿彌陀佛',
+        memberChange: 0,
+        officerChange: 0,
+        disasters: 0,
+        timestamp: new Date().toLocaleString(),
+        isReset: false,
+        isAmitabha: true,
+        amitabhaChange: 1
+      };
+      events.push(newEvent);
+      renderEventHistory();
+    }
+
+    // 添加阿彌陀佛功德使用處理函數
+    function handleAmitabhaUse(eventName) {
+      amitabhaCount--;
+      updateAmitabhaDisplay();
+      
+      // 記錄使用阿彌陀佛功德的事件
+      const newEvent = {
+        name: '使用阿彌陀佛功德抵消「' + eventName + '」',
+        memberChange: 0,
+        officerChange: 0,
+        disasters: 0,
+        timestamp: new Date().toLocaleString(),
+        isReset: false,
+        isAmitabha: true,
+        amitabhaChange: -1
+      };
+      events.push(newEvent);
+      renderEventHistory();
+    }
+
+    // 更新阿彌陀佛顯示的函數
+    function updateAmitabhaDisplay() {
+      document.getElementById('miniAmitabhaStatus').textContent = amitabhaCount;
+      document.getElementById('amitabhaStatus').textContent = amitabhaCount;
+      
+      // 添加動畫效果
+      document.querySelectorAll('#miniAmitabhaStatus, #amitabhaStatus').forEach(el => {
+        el.classList.remove('animated-number');
+        void el.offsetWidth; // 觸發重排
+        el.classList.add('animated-number');
+      });
+    }
+
+    // 添加經過起點按鈕的處理函數
+    document.getElementById('passStart').addEventListener('click', () => {
+      // 創建新事件
+      const newEvent = {
+        name: '經過起點',
+        memberChange: 2,
+        officerChange: 0,
+        disasters: 0,
+        timestamp: new Date().toLocaleString(),
+        isReset: false,
+        isPassStart: true
+      };
+
+      // 添加事件到歷史記錄
+      events.push(newEvent);
+
+      // 更新顯示
+      renderStats();
+      renderEventHistory();
+
+      // 顯示提示
+      alert('經過起點！社員+2');
+    });
   </script>
 </body>
 </html>
