@@ -391,18 +391,149 @@
     .event-option[data-event="愛語攝"],
     .event-option[data-event="利行攝"],
     .event-option[data-event="同事攝"] {
-      background: linear-gradient(135deg, #4ffd7a, #eaff2a);
-      color: rgb(0, 0, 0);
+      color: white;
+      font-weight: 700;  /* 加粗字體 */
       border: none !important;
-      transition: all 0.3s ease;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      position: relative;
+      overflow: hidden;
+      padding: 12px 20px;  /* 增加內邊距 */
+      letter-spacing: 0.5px;  /* 字間距 */
+      border-radius: 12px;  /* 更圓潤的邊角 */
+      backdrop-filter: blur(5px);
     }
 
+    /* 布施攝 - 高貴金色主題 */
+    .event-option[data-event="布施攝"] {
+      background: linear-gradient(135deg, #FFD700, #FFA500, #FF8C00) !important;
+      box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3),
+                  inset 0 -3px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    /* 愛語攝 - 溫柔粉紅主題 */
+    .event-option[data-event="愛語攝"] {
+      background: linear-gradient(135deg, #FF69B4, #FF1493, #C71585) !important;
+      box-shadow: 0 4px 15px rgba(255, 105, 180, 0.3),
+                  inset 0 -3px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    /* 利行攝 - 生機翡翠主題 */
+    .event-option[data-event="利行攝"] {
+      background: linear-gradient(135deg, #00FA9A, #00CED1, #008B8B) !important;
+      box-shadow: 0 4px 15px rgba(0, 250, 154, 0.3),
+                  inset 0 -3px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    /* 同事攝 - 高雅紫色主題 */
+    .event-option[data-event="同事攝"] {
+      background: linear-gradient(135deg, #9370DB, #8A2BE2, #4B0082) !important;
+      box-shadow: 0 4px 15px rgba(147, 112, 219, 0.3),
+                  inset 0 -3px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    /* 閃光效果增強 */
+    .event-option[data-event="布施攝"]::before,
+    .event-option[data-event="愛語攝"]::before,
+    .event-option[data-event="利行攝"]::before,
+    .event-option[data-event="同事攝"]::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(
+        45deg,
+        transparent,
+        rgba(255, 255, 255, 0.4),
+        transparent
+      );
+      transform: rotate(45deg);
+      transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      opacity: 0;
+      z-index: 1;
+    }
+
+    /* 內部光暈效果 */
+    .event-option[data-event="布施攝"]::after,
+    .event-option[data-event="愛語攝"]::after,
+    .event-option[data-event="利行攝"]::after,
+    .event-option[data-event="同事攝"]::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: radial-gradient(circle at center, 
+        rgba(255, 255, 255, 0.2) 0%,
+        transparent 70%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    /* 懸浮效果增強 */
     .event-option[data-event="布施攝"]:hover,
     .event-option[data-event="愛語攝"]:hover,
     .event-option[data-event="利行攝"]:hover,
     .event-option[data-event="同事攝"]:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(86, 238, 72, 0.3);
+      transform: translateY(-4px) scale(1.02);
+      filter: brightness(110%) contrast(105%);
+    }
+
+    /* 個別懸浮陰影效果 */
+    .event-option[data-event="布施攝"]:hover {
+      box-shadow: 0 8px 25px rgba(255, 215, 0, 0.4),
+                  0 4px 10px rgba(255, 165, 0, 0.3),
+                  inset 0 -3px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .event-option[data-event="愛語攝"]:hover {
+      box-shadow: 0 8px 25px rgba(255, 105, 180, 0.4),
+                  0 4px 10px rgba(255, 20, 147, 0.3),
+                  inset 0 -3px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .event-option[data-event="利行攝"]:hover {
+      box-shadow: 0 8px 25px rgba(0, 250, 154, 0.4),
+                  0 4px 10px rgba(0, 206, 209, 0.3),
+                  inset 0 -3px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .event-option[data-event="同事攝"]:hover {
+      box-shadow: 0 8px 25px rgba(147, 112, 219, 0.4),
+                  0 4px 10px rgba(138, 43, 226, 0.3),
+                  inset 0 -3px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    /* 懸浮時顯示內部光暈 */
+    .event-option[data-event="布施攝"]:hover::after,
+    .event-option[data-event="愛語攝"]:hover::after,
+    .event-option[data-event="利行攝"]:hover::after,
+    .event-option[data-event="同事攝"]:hover::after {
+      opacity: 1;
+    }
+
+    /* 懸浮時顯示閃光效果 */
+    .event-option[data-event="布施攝"]:hover::before,
+    .event-option[data-event="愛語攝"]:hover::before,
+    .event-option[data-event="利行攝"]:hover::before,
+    .event-option[data-event="同事攝"]:hover::before {
+      opacity: 1;
+      left: 100%;
+      transition: left 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* 點擊效果增強 */
+    .event-option[data-event="布施攝"]:active,
+    .event-option[data-event="愛語攝"]:active,
+    .event-option[data-event="利行攝"]:active,
+    .event-option[data-event="同事攝"]:active {
+      transform: translateY(2px);
+      filter: brightness(95%) contrast(105%);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2),
+                  inset 0 2px 5px rgba(0, 0, 0, 0.1);
     }
 
     /* 善緣按鈕 - 翡翠綠漸層 */
@@ -1201,8 +1332,8 @@
 
         <div class="button-container">
           <button id="submitEvent" class="submit-button">送出事件</button>
-          <button id="collapseClub">倒社按鈕</button>
           <button id="passStart" class="pass-start-button">經過起點</button>
+          <button id="collapseClub">倒社按鈕</button>
         </div>
       </div>
     </div>
@@ -1673,12 +1804,6 @@
         void el.offsetWidth;
         el.classList.add('animated-number');
       });
-
-      // 檢查是否倒社
-      if (totals.totalMembers <= 0 || totals.totalOfficers <= 0) {
-        setCollapsed(true);
-        document.getElementById('alertDialog').style.display = 'flex';
-      }
     };
 
      const renderEventHistory = () => {
