@@ -126,7 +126,7 @@
 
     .status-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);  /* 改為 3 列 */
+      grid-template-columns: repeat(4, 1fr);
       gap: 1rem;
       position: relative;
       z-index: 1;
@@ -1277,28 +1277,6 @@
       background: linear-gradient(135deg, #A0AEC0, #718096);
       color: white;
     }
-
-    /* 新增總分的特殊樣式 */
-    #totalScore, #miniTotalScore {
-      color: #2D3748;
-      font-weight: 700;
-      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-    }
-
-    .mini-stat-item:nth-child(3) {  /* 總分的 mini-stat-item */
-      background: linear-gradient(135deg, #4299E1, #3182CE);
-      color: white;
-    }
-
-    /* 修改阿彌陀佛 mini-stat-item 的樣式 */
-    .mini-stat-item.amitabha-mini {
-      color: #2D3748;  /* 使用深灰色/黑色 */
-    }
-
-    /* 確保阿彌陀佛的數字也是黑色 */
-    .mini-stat-item.amitabha-mini span {
-      color: #2D3748;
-    }
   </style>
 </head>
 <body class="p-4">
@@ -1330,10 +1308,6 @@
       <div class="status-item">
         <div class="status-label">目前總幹部數</div>
         <div class="status-value" id="officerStatus">5</div>
-      </div>
-      <div class="status-item">
-        <div class="status-label">當前總分</div>
-        <div class="status-value" id="totalScore">25</div>
       </div>
       <div class="status-item">
         <div class="status-label">當前期間劫難數</div>
@@ -1954,18 +1928,11 @@
     const renderStats = () => {
       const totals = calculateTotals();
       
-      // 計算總分
-      const totalScore = (totals.totalOfficers * 3) + (totals.totalMembers * 1);
-      
-      // 更新所有狀態顯示
       document.getElementById('memberStatus').textContent = totals.totalMembers;
       document.getElementById('officerStatus').textContent = totals.totalOfficers;
       document.getElementById('disasterStatus').textContent = totals.totalDisasters;
-      document.getElementById('totalScore').textContent = totalScore;
-      
       document.getElementById('miniMemberStatus').textContent = totals.totalMembers;
       document.getElementById('miniOfficerStatus').textContent = totals.totalOfficers;
-      document.getElementById('miniTotalScore').textContent = totalScore;
       
       // 更新阿彌陀佛顯示
       updateAmitabhaDisplay();
