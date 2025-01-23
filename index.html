@@ -481,6 +481,554 @@
       transform: translateY(0);
       box-shadow: 0 2px 8px rgba(237, 137, 54, 0.2);
     }
+
+    .custom-dialog {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .dialog-backdrop {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(4px);
+      animation: fadeIn 0.2s ease-out;
+    }
+
+    .dialog-container {
+      position: relative;
+      width: 90%;
+      max-width: 400px;
+      margin: 1.5rem;
+      animation: slideIn 0.3s ease-out;
+    }
+
+    .dialog-content {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 16px;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+                  0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      text-align: center;
+    }
+
+    .dialog-icon {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 1rem;
+      color: #4F46E5;
+    }
+
+    .dialog-message {
+      color: #1F2937;
+      font-size: 1.125rem;
+      font-weight: 500;
+      margin-bottom: 1.5rem;
+      line-height: 1.5;
+    }
+
+    .dialog-buttons {
+      display: flex;
+      gap: 0.75rem;
+      justify-content: center;
+    }
+
+    .dialog-btn {
+      flex: 1;
+      padding: 0.75rem 1.5rem;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: all 0.2s ease;
+      border: none;
+      cursor: pointer;
+    }
+
+    .dialog-btn.yes {
+      background: linear-gradient(135deg, #4F46E5, #4338CA);
+      color: white;
+      box-shadow: 0 4px 6px -1px rgba(79, 70, 229, 0.2);
+    }
+
+    .dialog-btn.no {
+      background: linear-gradient(135deg, #EF4444, #DC2626);
+      color: white;
+      box-shadow: 0 4px 6px -1px rgba(239, 68, 68, 0.2);
+    }
+
+    .dialog-btn:hover {
+      transform: translateY(-2px);
+      filter: brightness(110%);
+    }
+
+    .dialog-btn:active {
+      transform: translateY(0);
+      filter: brightness(90%);
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes slideIn {
+      from {
+        transform: translateY(20px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    /* 單按鈕模式的樣式 */
+    .dialog-buttons.single-button {
+      justify-content: center;
+    }
+
+    .dialog-buttons.single-button .dialog-btn {
+      min-width: 120px;
+      max-width: 200px;
+    }
+
+    /* 特殊事件視窗樣式 */
+    .special-event-dialog {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .special-event-icon {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 1.5rem;
+      position: relative;
+    }
+
+    .icon-animation {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      position: relative;
+      animation: pulse 2s infinite;
+    }
+
+    .special-event-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: #2D3748;
+    }
+
+    .special-event-message {
+      font-size: 1.125rem;
+      color: #4A5568;
+      margin-bottom: 1.5rem;
+    }
+
+    /* 經過起點的樣式 */
+    .special-event-dialog.checkpoint .icon-animation {
+      background: linear-gradient(135deg, #F6E05E, #ECC94B);
+      box-shadow: 0 0 30px rgba(236, 201, 75, 0.5);
+    }
+
+    .special-event-dialog.checkpoint .special-event-title {
+      color: #B7791F;
+    }
+
+    .special-event-dialog.checkpoint .dialog-btn.special {
+      background: linear-gradient(135deg, #F6E05E, #D69E2E);
+    }
+
+    /* 獲得阿彌陀佛的樣式 */
+    .special-event-dialog.amitabha .icon-animation {
+      background: linear-gradient(135deg, #9F7AEA, #805AD5);
+      box-shadow: 0 0 30px rgba(159, 122, 234, 0.5);
+    }
+
+    .special-event-dialog.amitabha .special-event-title {
+      color: #6B46C1;
+    }
+
+    .special-event-dialog.amitabha .dialog-btn.special {
+      background: linear-gradient(135deg, #9F7AEA, #6B46C1);
+    }
+
+    /* 動畫效果 */
+    @keyframes pulse {
+      0% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.3);
+      }
+      70% {
+        transform: scale(1);
+        box-shadow: 0 0 0 15px rgba(0, 0, 0, 0);
+      }
+      100% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+      }
+    }
+
+    @keyframes fadeInScale {
+      from {
+        opacity: 0;
+        transform: scale(0.8);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .dialog-content.special {
+      animation: fadeInScale 0.3s ease-out;
+      padding: 2rem;
+    }
+
+    .dialog-btn.special {
+      color: white;
+      padding: 0.875rem 2rem;
+      font-weight: 600;
+      min-width: 150px;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .dialog-btn.special:hover {
+      transform: translateY(-2px);
+      filter: brightness(110%);
+    }
+
+    .amitabha-get-dialog {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .amitabha-image-container {
+      position: relative;
+      width: 200px;
+      height: 200px;
+      margin: 0 auto 1.5rem;
+      border-radius: 50%;
+      overflow: hidden;
+    }
+
+    .amitabha-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+      animation: glow 2s infinite;
+    }
+
+    .light-effect {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: radial-gradient(circle at center, 
+        rgba(255, 223, 128, 0.3) 0%,
+        rgba(255, 223, 128, 0) 70%);
+      animation: rotate 10s linear infinite;
+    }
+
+    .dialog-content.amitabha {
+      background: linear-gradient(135deg, #FEFCF1, #FFF9E5);
+      padding: 2rem;
+      max-width: 400px;
+      text-align: center;
+      animation: fadeInScale 0.5s ease-out;
+    }
+
+    .amitabha-title {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: #B7791F;
+      margin-bottom: 1rem;
+      text-shadow: 0 2px 4px rgba(183, 121, 31, 0.2);
+    }
+
+    .amitabha-message {
+      font-size: 1.25rem;
+      color: #744210;
+      margin-bottom: 1.5rem;
+    }
+
+    .dialog-btn.amitabha-btn {
+      background: linear-gradient(135deg, #F6E05E, #D69E2E);
+      color: white;
+      padding: 0.875rem 2rem;
+      font-weight: 600;
+      min-width: 150px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(214, 158, 46, 0.3);
+      transition: all 0.3s ease;
+    }
+
+    .dialog-btn.amitabha-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba(214, 158, 46, 0.4);
+    }
+
+    @keyframes glow {
+      0% {
+        box-shadow: 0 0 20px rgba(255, 223, 128, 0.5);
+      }
+      50% {
+        box-shadow: 0 0 40px rgba(255, 223, 128, 0.8);
+      }
+      100% {
+        box-shadow: 0 0 20px rgba(255, 223, 128, 0.5);
+      }
+    }
+
+    @keyframes rotate {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .dialog-content.amitabha-special {
+      background: linear-gradient(135deg, #FFF5E6, #FFECD1);
+      padding: 2rem;
+      border-radius: 20px;
+      text-align: center;
+    }
+
+    .buddha-image-container {
+      position: relative;
+      width: 180px;
+      height: 180px;
+      margin: 0 auto 1.5rem;
+      border-radius: 50%;
+      overflow: hidden;
+    }
+
+    .buddha-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+      animation: glow 2s infinite;
+    }
+
+    .light-rays {
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      right: -50%;
+      bottom: -50%;
+      background: radial-gradient(circle at center,
+        rgba(255, 223, 128, 0.4) 0%,
+        rgba(255, 223, 128, 0) 70%);
+      animation: rotate 10s linear infinite;
+    }
+
+    .amitabha-title {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: #B7791F;
+      margin-bottom: 1rem;
+      text-shadow: 0 2px 4px rgba(183, 121, 31, 0.2);
+    }
+
+    .amitabha-message {
+      font-size: 1.25rem;
+      color: #744210;
+      margin-bottom: 1.5rem;
+    }
+
+    .dialog-btn.amitabha-confirm {
+      background: linear-gradient(135deg, #F6E05E, #D69E2E);
+      color: white;
+      padding: 0.875rem 2.5rem;
+      font-size: 1.125rem;
+      font-weight: 600;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(214, 158, 46, 0.3);
+      transition: all 0.3s ease;
+    }
+
+    .dialog-btn.amitabha-confirm:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba(214, 158, 46, 0.4);
+    }
+
+    /* 添加使用阿彌陀佛功德的按鈕樣式 */
+    .dialog-buttons.amitabha-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      margin-top: 1.5rem;
+    }
+
+    .dialog-btn.amitabha-btn {
+      padding: 0.875rem 1.5rem;
+      font-size: 1.125rem;
+      font-weight: 600;
+      border-radius: 12px;
+      transition: all 0.3s ease;
+      min-width: 120px;
+    }
+
+    .dialog-btn.amitabha-btn.yes {
+      background: linear-gradient(135deg, #F6E05E, #D69E2E);
+      color: white;
+      box-shadow: 0 4px 12px rgba(214, 158, 46, 0.3);
+    }
+
+    .dialog-btn.amitabha-btn.no {
+      background: linear-gradient(135deg, #CBD5E0, #A0AEC0);
+      color: white;
+      box-shadow: 0 4px 12px rgba(160, 174, 192, 0.3);
+    }
+
+    .dialog-btn.amitabha-btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .dialog-btn.amitabha-btn.yes:hover {
+      box-shadow: 0 6px 15px rgba(214, 158, 46, 0.4);
+    }
+
+    .dialog-btn.amitabha-btn.no:hover {
+      box-shadow: 0 6px 15px rgba(160, 174, 192, 0.4);
+    }
+
+    .dialog-content.challenge-special {
+      background: linear-gradient(135deg, #F7FAFC, #EDF2F7);
+      padding: 2rem;
+      border-radius: 20px;
+      text-align: center;
+    }
+
+    .challenge-image-container {
+      position: relative;
+      width: 200px;
+      height: 200px;
+      margin: 0 auto 1.5rem;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    }
+
+    .challenge-image {
+      width: 100%;
+      height: 120%;  /* 增加高度以便有更多空間可以調整 */
+      object-fit: cover;
+      transition: transform 0.3s ease;
+      object-position: center 5%;  /* 調整圖片的垂直位置，數值越小越往上 */
+    }
+
+    .challenge-image-container:hover .challenge-image {
+      transform: scale(1.05);
+    }
+
+    .challenge-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #2D3748;
+      margin-bottom: 1rem;
+    }
+
+    .challenge-message {
+      font-size: 1.25rem;
+      color: #4A5568;
+      margin-bottom: 1.5rem;
+    }
+
+    .dialog-buttons.challenge-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+    }
+
+    .dialog-btn.challenge-btn {
+      padding: 0.875rem 1.5rem;
+      font-size: 1.125rem;
+      font-weight: 600;
+      border-radius: 12px;
+      transition: all 0.3s ease;
+      min-width: 120px;
+    }
+
+    .dialog-btn.challenge-btn.yes {
+      background: linear-gradient(135deg, #48BB78, #38A169);
+      color: white;
+      box-shadow: 0 4px 12px rgba(56, 161, 105, 0.3);
+    }
+
+    .dialog-btn.challenge-btn.no {
+      background: linear-gradient(135deg, #F56565, #E53E3E);
+      color: white;
+      box-shadow: 0 4px 12px rgba(229, 62, 62, 0.3);
+    }
+
+    .dialog-btn.challenge-btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .dialog-btn.challenge-btn.yes:hover {
+      box-shadow: 0 6px 15px rgba(56, 161, 105, 0.4);
+    }
+
+    .dialog-btn.challenge-btn.no:hover {
+      box-shadow: 0 6px 15px rgba(229, 62, 62, 0.4);
+    }
+
+    .dialog-image-container {
+      width: 200px;
+      height: 200px;
+      margin: 0 auto 1.5rem;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    }
+
+    .dialog-image {
+      width: 100%;
+      height: 120%;
+      object-fit: cover;
+      object-position: center 30%;
+    }
   </style>
 </head>
 <body class="p-4">
@@ -677,6 +1225,96 @@
     </div>
   </div>
 
+  <div id="customDialog" class="custom-dialog hidden">
+    <div class="dialog-backdrop"></div>
+    <div class="dialog-container">
+      <div class="dialog-content">
+        <div class="dialog-icon">
+          <svg class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+          </svg>
+        </div>
+        <p id="dialogMessage" class="dialog-message"></p>
+        <div class="dialog-buttons">
+          <button id="dialogNo" class="dialog-btn no">取消</button>
+          <button id="dialogYes" class="dialog-btn yes">確定</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 添加特殊事件的動畫視窗 -->
+  <div id="specialEventDialog" class="special-event-dialog hidden">
+    <div class="dialog-backdrop"></div>
+    <div class="dialog-container">
+      <div class="dialog-content special">
+        <div class="special-event-icon">
+          <div class="icon-animation"></div>
+        </div>
+        <h2 id="specialEventTitle" class="special-event-title"></h2>
+        <p id="specialEventMessage" class="special-event-message"></p>
+        <div class="dialog-buttons">
+          <button id="specialEventConfirm" class="dialog-btn special">確定</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 添加阿彌陀佛獲得專用對話框 -->
+  <div id="amitabhaGetDialog" class="custom-dialog hidden">
+    <div class="dialog-backdrop"></div>
+    <div class="dialog-container">
+      <div class="dialog-content amitabha-special">
+        <div class="buddha-image-container">
+          <img src="budda.jpg" alt="阿彌陀佛" class="buddha-image">
+          <div class="light-rays"></div>
+        </div>
+        <h2 class="amitabha-title">南無阿彌陀佛！</h2>
+        <p class="amitabha-message">獲得一次阿彌陀佛功德</p>
+        <div class="dialog-buttons">
+          <button id="amitabhaConfirm" class="dialog-btn amitabha-confirm">阿彌陀佛</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 添加使用阿彌陀佛功德對話框 -->
+  <div id="amitabhaUseDialog" class="custom-dialog hidden">
+    <div class="dialog-backdrop"></div>
+    <div class="dialog-container">
+      <div class="dialog-content amitabha-special">
+        <div class="buddha-image-container">
+          <img src="budda.jpg" alt="阿彌陀佛" class="buddha-image">
+          <div class="light-rays"></div>
+        </div>
+        <h2 class="amitabha-title">南無阿彌陀佛！</h2>
+        <p class="amitabha-message">是否使用阿彌陀佛功德？</p>
+        <div class="dialog-buttons amitabha-buttons">
+          <button id="amitabhaUseNo" class="dialog-btn amitabha-btn no">不使用</button>
+          <button id="amitabhaUseYes" class="dialog-btn amitabha-btn yes">使用</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 添加挑戰對話框 -->
+  <div id="challengeDialog" class="custom-dialog hidden">
+    <div class="dialog-backdrop"></div>
+    <div class="dialog-container">
+      <div class="dialog-content challenge-special">
+        <div class="challenge-image-container">
+          <img src="annoy.jpg" alt="挑戰" class="challenge-image">
+        </div>
+        <h2 id="challengeTitle" class="challenge-title"></h2>
+        <p id="challengeMessage" class="challenge-message">是否完成挑戰？</p>
+        <div class="dialog-buttons challenge-buttons">
+          <button id="challengeNo" class="dialog-btn challenge-btn no">挑戰失敗</button>
+          <button id="challengeYes" class="dialog-btn challenge-btn yes">完成</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script>
     const INITIAL_MEMBERS = 10;
     const INITIAL_OFFICERS = 5;
@@ -729,25 +1367,28 @@
         
         if (selectedEventType === 'bad') {
           if (amitabhaCount > 0) {
-            const useAmitabha = confirm('是否使用阿彌陀佛功德抵消惡緣？');
+            const useAmitabha = await showAmitabhaUseDialog();
             if (useAmitabha) {
+              amitabhaCount--; // 立即扣除阿彌陀佛功德
+              renderStats();
               handleAmitabhaUse(eventName);
               return;
             }
           }
         } else if (eventName === '阿彌陀佛') {
-          handleAmitabhaGain();
+          handleAmitabhaGet();
           return;
         } else if (selectedEventType === 'challenge') {
           let useAmitabha = false;
           if (amitabhaCount > 0) {
-            useAmitabha = confirm('是否使用阿彌陀佛功德加持挑戰？');
+            useAmitabha = await showAmitabhaUseDialog();
             if (useAmitabha) {
-              handleAmitabhaUse(eventName);
+              amitabhaCount--; // 立即扣除阿彌陀佛功德
+              renderStats();
             }
           }
 
-          const isSuccess = confirm(`是否成功完成「${eventName}」挑戰？`);
+          const isSuccess = await showChallengeDialog(eventName);
           
           if (isSuccess) {
             // 挑戰成功
@@ -761,11 +1402,10 @@
               challengeResult: 'success'
             };
             events.push(newEvent);
-            alert('恭喜完成挑戰！經歷劫難+1');
+            await showCustomDialog('恭喜完成挑戰！經歷劫難+1', '確定', null, 'success.jpg');
           } else {
-            // 挑戰失敗
             if (useAmitabha) {
-              // 使用阿彌陀佛功德，失敗無懲罰
+              // 使用阿彌陀佛功德
               const newEvent = {
                 name: `阿彌陀佛功德護佑，平安度過「${eventName}」挑戰失敗`,
                 memberChange: 0,
@@ -776,9 +1416,9 @@
                 challengeResult: 'protected'
               };
               events.push(newEvent);
-              alert('阿彌陀佛功德護佑，平安度過失敗！');
+              await showCustomDialog('阿彌陀佛功德護佑，平安度過失敗！', '確定', null, 'budda.jpg');
             } else {
-              // 未使用阿彌陀佛功德，失敗扣社員
+              // 失敗且未使用阿彌陀佛功德
               const newEvent = {
                 name: `失敗於「${eventName}」挑戰`,
                 memberChange: -2,
@@ -789,16 +1429,33 @@
                 challengeResult: 'fail'
               };
               events.push(newEvent);
-              alert('挑戰失敗！社員-2');
+              await showCustomDialog('挑戰失敗！社員-2', '確定', null, 'fail.jpg');
             }
           }
           
           renderStats();
           renderEventHistory();
           return;
+        } else if (selectedEventType === 'neutral') {
+          // 中道實相事件直接記錄，不需要選擇變動數
+          const newEvent = {
+            name: eventName,
+            memberChange: 0,
+            officerChange: 0,
+            disasters: 0,
+            timestamp: new Date().toLocaleString()
+          };
+          events.push(newEvent);
+          renderStats();
+          renderEventHistory();
+          
+          // 重置選擇狀態
+          selectedEventType = null;
+          hideAllEventButtons();
+          return;
         }
 
-        // 其他事件處理...
+        // 其他事件類型才顯示變動選項
         document.getElementById('eventName').value = eventName;
         document.getElementById('changeInputs').classList.remove('hidden');
         
@@ -889,10 +1546,68 @@
       });
     };
 
-    const showConfirmDialog = (message) => {
+    const showCustomDialog = (message, yesText = '確定', noText = null, imageSrc = null) => {
       return new Promise((resolve) => {
-        const confirmed = confirm(message);
-        resolve(confirmed);
+        const dialog = document.getElementById('customDialog');
+        const messageEl = document.getElementById('dialogMessage');
+        const buttonsContainer = dialog.querySelector('.dialog-buttons');
+        const yesBtn = document.getElementById('dialogYes');
+        const noBtn = document.getElementById('dialogNo');
+        
+        // 隱藏 icon
+        const dialogIcon = dialog.querySelector('.dialog-icon');
+        if (dialogIcon) {
+          dialogIcon.style.display = imageSrc ? 'none' : 'flex';
+        }
+        
+        // 處理圖片顯示
+        let imageContainer = dialog.querySelector('.dialog-image-container');
+        if (imageSrc) {
+          if (!imageContainer) {
+            imageContainer = document.createElement('div');
+            imageContainer.className = 'dialog-image-container';
+            const img = document.createElement('img');
+            imageContainer.appendChild(img);
+            dialog.querySelector('.dialog-content').insertBefore(imageContainer, messageEl);
+          }
+          const img = imageContainer.querySelector('img');
+          img.src = imageSrc;
+          img.className = 'dialog-image';
+          imageContainer.style.display = 'block';
+        } else if (imageContainer) {
+          imageContainer.style.display = 'none';
+        }
+        
+        messageEl.textContent = message;
+        yesBtn.textContent = yesText;
+        
+        if (noText === null) {
+          noBtn.style.display = 'none';
+          buttonsContainer.classList.add('single-button');
+        } else {
+          noBtn.style.display = 'block';
+          noBtn.textContent = noText;
+          buttonsContainer.classList.remove('single-button');
+        }
+        
+        dialog.classList.remove('hidden');
+
+        yesBtn.onclick = () => {
+          dialog.classList.add('hidden');
+          resolve(true);
+        };
+
+        noBtn.onclick = () => {
+          dialog.classList.add('hidden');
+          resolve(false);
+        };
+
+        dialog.querySelector('.dialog-backdrop').onclick = (e) => {
+          if (noText === null && e.target === dialog.querySelector('.dialog-backdrop')) {
+            dialog.classList.add('hidden');
+            resolve(true);
+          }
+        };
       });
     };
 
@@ -958,6 +1673,12 @@
         void el.offsetWidth;
         el.classList.add('animated-number');
       });
+
+      // 檢查是否倒社
+      if (totals.totalMembers <= 0 || totals.totalOfficers <= 0) {
+        setCollapsed(true);
+        document.getElementById('alertDialog').style.display = 'flex';
+      }
     };
 
      const renderEventHistory = () => {
@@ -1067,45 +1788,57 @@
       });
     });
 
-    // 添加阿彌陀佛功德獲得處理函數
-    function handleAmitabhaGain() {
-      alert('南無阿彌陀佛！獲得一次阿彌陀佛功德！');
+    // 修改獲得阿彌陀佛功德的處理
+    async function handleAmitabhaGet() {
       amitabhaCount++;
-      updateAmitabhaDisplay();
-      
-      // 記錄獲得阿彌陀佛功德的事件
-      const newEvent = {
-        name: '遇見阿彌陀佛',
-        memberChange: 0,
-        officerChange: 0,
-        disasters: 0,
-        timestamp: new Date().toLocaleString(),
-        isReset: false,
-        isAmitabha: true,
-        amitabhaChange: 1
-      };
-      events.push(newEvent);
-      renderEventHistory();
+      renderStats(); // 立即更新數量
+      await showAmitabhaGetDialog();
     }
 
-    // 添加阿彌陀佛功德使用處理函數
-    function handleAmitabhaUse(eventName) {
-      amitabhaCount--;
-      updateAmitabhaDisplay();
-      
-      // 記錄使用阿彌陀佛功德的事件
-      const newEvent = {
-        name: '使用阿彌陀佛功德抵消「' + eventName + '」',
-        memberChange: 0,
-        officerChange: 0,
-        disasters: 0,
-        timestamp: new Date().toLocaleString(),
-        isReset: false,
-        isAmitabha: true,
-        amitabhaChange: -1
-      };
-      events.push(newEvent);
-      renderEventHistory();
+    // 顯示獲得阿彌陀佛功德對話框
+    function showAmitabhaGetDialog() {
+      return new Promise((resolve) => {
+        const dialog = document.getElementById('amitabhaGetDialog');
+        const confirmBtn = document.getElementById('amitabhaConfirm');
+        
+        dialog.classList.remove('hidden');
+
+        confirmBtn.onclick = () => {
+          dialog.classList.add('hidden');
+          resolve(true);
+        };
+      });
+    }
+
+    // 顯示使用阿彌陀佛功德對話框
+    function showAmitabhaUseDialog() {
+      return new Promise((resolve) => {
+        const dialog = document.getElementById('amitabhaUseDialog');
+        const yesBtn = document.getElementById('amitabhaUseYes');
+        const noBtn = document.getElementById('amitabhaUseNo');
+        
+        dialog.classList.remove('hidden');
+
+        yesBtn.onclick = () => {
+          dialog.classList.add('hidden');
+          resolve(true);
+        };
+
+        noBtn.onclick = () => {
+          dialog.classList.add('hidden');
+          resolve(false);
+        };
+      });
+    }
+
+    // 修改使用阿彌陀佛功德的處理
+    async function handleAmitabhaUse(eventName) {
+      // 顯示使用成功的訊息
+      await showCustomDialog(
+        '阿彌陀佛功德護佑，平安度過！',
+        '阿彌陀佛'
+      );
+      return true;
     }
 
     // 更新阿彌陀佛顯示的函數
@@ -1122,8 +1855,7 @@
     }
 
     // 添加經過起點按鈕的處理函數
-    document.getElementById('passStart').addEventListener('click', () => {
-      // 創建新事件
+    document.getElementById('passStart').addEventListener('click', async () => {
       const newEvent = {
         name: '經過起點',
         memberChange: 2,
@@ -1134,16 +1866,64 @@
         isPassStart: true
       };
 
-      // 添加事件到歷史記錄
       events.push(newEvent);
-
-      // 更新顯示
+      await showSpecialEventDialog(
+        'checkpoint',
+        '經過起點！',
+        '恭喜獲得社員 +2'
+      );
+      
       renderStats();
       renderEventHistory();
-
-      // 顯示提示
-      alert('經過起點！社員+2');
     });
+
+    // 特殊事件視窗函數
+    function showSpecialEventDialog(type, title, message) {
+      return new Promise((resolve) => {
+        const dialog = document.getElementById('specialEventDialog');
+        const titleEl = document.getElementById('specialEventTitle');
+        const messageEl = document.getElementById('specialEventMessage');
+        const confirmBtn = document.getElementById('specialEventConfirm');
+        
+        dialog.className = `special-event-dialog ${type}`;
+        titleEl.textContent = title;
+        messageEl.textContent = message;
+        
+        dialog.classList.remove('hidden');
+
+        confirmBtn.onclick = () => {
+          dialog.classList.add('hidden');
+          resolve(true);
+        };
+      });
+    }
+
+    // 顯示挑戰對話框
+    function showChallengeDialog(challengeName) {
+      return new Promise((resolve) => {
+        const dialog = document.getElementById('challengeDialog');
+        const titleEl = document.getElementById('challengeTitle');
+        const yesBtn = document.getElementById('challengeYes');
+        const noBtn = document.getElementById('challengeNo');
+        
+        titleEl.textContent = `「${challengeName}」`;
+        // 初始顯示 annoy.jpg
+        document.querySelector('.challenge-image').src = 'annoy.jpg';
+        dialog.classList.remove('hidden');
+
+        yesBtn.onclick = () => {
+          // 點擊成功時更換圖片
+          document.querySelector('.challenge-image').src = 'success.jpg';
+          dialog.classList.add('hidden');
+          resolve(true);
+        };
+
+        noBtn.onclick = () => {
+          dialog.classList.add('hidden');
+          resolve(false);
+        };
+      });
+    }
   </script>
 </body>
 </html>
